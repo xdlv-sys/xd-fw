@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>增值税管理平台</title>
+    <link href="js/cache/min/angular-material.min.css" rel="stylesheet">
+
+    <script src="js/cache/min/angular.min.js"></script>
+    <script src="js/cache/min/angular-animate.min.js"></script>
+    <script src="js/cache/min/angular-aria.min.js"></script>
+    <script src="js/cache/min/angular-material.min.js"></script>  
+    <script src="js/cache/min/angular-ui-router.min.js"></script>
+    <script src="js/cache/min/angular-messages.min.js"></script>
+    <link href="js/cache/min/font-awesome.min.css" rel="stylesheet">
+    <script src="js/cache/min/ui-grid.min.js"></script>
+    <link href="js/cache/min/ui-grid.min.css" rel="stylesheet">
+
+    <link href="js/cache/min/angular-ui-tree.min.css" rel="stylesheet">
+    <script src="js/cache/min/angular-ui-tree.min.js"></script>
+
+    <link href="js/comp/kjvelarde-multiselect-searchtree-0.9.5.min.css" rel="stylesheet">
+    <script src="js/comp/kjvelarde-multiselect-searchtree-0.9.5.min.js"></script>
+    <script src="js/comp/kjvelarde-multiselect-searchtree-0.9.5.tpl.js"></script>
+    <script src="js/comp/ngPopover.min.js"></script>
+    <link href="js/comp/ngpopover.css" rel="stylesheet">
+    <script src="js/comp/lf-ng-md-file-input.js"></script>
+    <link href="js/comp/lf-ng-md-file-input.min.css" rel="stylesheet">
+
+    <!-- my stuff-->
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/menu.css" />
+     <script type="text/javascript" src="js/modules.js"></script>
+    <script type="text/javascript" src="js/service/common.js"></script>
+    <script type="text/javascript" src="js/service/menu.js"></script>
+    <script type="text/javascript" src="js/service/xd-grid.js"></script>
+    <script type="text/javascript" src="js/service/menu-directive.js"></script>
+    <script type="text/javascript" src="js/service/modal.js"></script>
+    <script type="text/javascript" src="js/service/module.js"></script>
+    <script type="text/javascript" src="js/service/configuration.js"></script>
+    <script type="text/javascript" src="js/service/util.js"></script>
+    
+    <script type="text/javascript" src="js/router.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/controller/user.js"></script>
+    <script type="text/javascript" src="js/controller/dept.js"></script>
+    <script type="text/javascript" src="js/controller/role.js"></script>
+    <script type="text/javascript" src="js/controller/login.js"></script>
+    <script type="text/javascript" src="js/controller/conf.js"></script>
+    <!-- <script type="text/javascript" src="js/cache/min/app.js"></script> -->
+</head>
+
+<body ng-app="xdApp" layout="column" ng-controller="xdController">
+    <md-toolbar md-whiteframe="8" layout="row" class="md-toolbar-tools">
+        <img src="img/logo.png" width="50px" height="50px" />
+        <div style="font-size:20px;font-weight:bold;color:white;">&nbsp;&nbsp;|&nbsp; {{appName}}</div>
+        <md-button class="menu md-icon-button" ng-click="toggleMenu()" aria-label="Show Menu" ng-if="loginSuccess">
+            <md-icon md-svg-icon="menu"></md-icon>
+        </md-button>
+        <span flex></span>
+        <div layout="row" ng-if="loginSuccess">
+            <md-button class="fa fa-user" ng-click="changePassword()"><span class="tool_button">{{user.name}}</span></md-button>
+            <md-button class="fa fa-sign-out" ng-click="logout()"><span class="tool_button">退出</span></md-button>
+        </div>
+    </md-toolbar>
+    <div flex layout="row">
+        <md-sidenav md-whiteframe="8" class="md-whiteframe-4dp" md-component-id="left" md-is-locked-open="menuOpen && loginSuccess">
+            <md-content role="navigation">
+                <ul class="side-menu">
+                    <li ng-repeat="section in menu.sections" class="parent-list-item" ng-if="loginSuccess">
+                        <p class="menu-heading" ng-if="section.type === 'heading'">
+                            {{section.name}}
+                        </p>
+                        <menu-link section="section" ng-if="section.type === 'link'"></menu-link>
+                        <menu-toggle section="section" ng-if="section.type === 'toggle'"></menu-toggle>
+                    </li>
+                </ul>
+            </md-content>
+        </md-sidenav>
+        <md-content flex ui-view id="content" layout="column" style="padding:10px;">
+        </md-content>
+    </div>
+</body>
+
+</html>

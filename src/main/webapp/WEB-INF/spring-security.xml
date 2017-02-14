@@ -1,0 +1,33 @@
+<beans xmlns:s="http://www.springframework.org/schema/security"
+         xmlns="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <s:http pattern="/user/version.cmd" security="none"/>
+    <s:http pattern="/w/index.html" security="none"/>
+
+    <s:http auto-config="false" >
+        <s:intercept-url pattern="*.cmd" access="hasRole('ROLE_EXE')"/>
+        <s:form-login login-page="/w/index.html" login-processing-url="/user/userLogin.cmd"
+                      authentication-success-forward-url="/user/userLogin.cmd"
+                      username-parameter="name" password-parameter="password"/>
+        <s:logout delete-cookies="true" invalidate-session="true"
+                  logout-success-url="/w/index.html" logout-url="/user/userLogout.cmd"/>
+        <s:csrf disabled="true"/>
+        <s:anonymous enabled="false"/>
+        <s:custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+    </s:http>
+
+    <bean id="securityFilter" class="xd.fw.mk.CustomFilterSecurityInterceptor">
+        <property name="accessDecisionManager" ref="securityAccessDecisionManager"/>
+        <property name="securityMetadataSource" ref="emptySecurityMetadataSource"/>
+     </bean>
+
+    <s:authentication-manager alias="authenticationManager">
+        <s:authentication-provider user-service-ref="securityUserDetail">
+            <s:password-encoder hash="md5" />
+        </s:authentication-provider>
+    </s:authentication-manager>
+
+</beans>

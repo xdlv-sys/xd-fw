@@ -1,0 +1,64 @@
+<div layout="row">
+    <md-input-container flex>
+        <label>用户名</label>
+        <input ng-model="modal.data.name" type="text" required>
+    </md-input-container>
+    <md-input-container flex>
+        <label>出身日期</label>
+        <md-datepicker ng-model="modal.data.birthday" required xd-date></md-datepicker>
+    </md-input-container>
+</div>
+<div layout="row">
+    <md-input-container flex>
+        <md-select ng-model="modal.data.sex" required>
+            <label>性别</label>
+            <md-option ng-value="1">男</md-option>
+            <md-option ng-value="0">女</md-option>
+        </md-select>
+    </md-input-container>
+    <md-input-container flex>
+        <label>入职时间</label>
+        <md-datepicker ng-model="modal.data.entryTime" required xd-date></md-datepicker>
+    </md-input-container>
+</div>
+<div layout="row">
+    <md-input-container flex>
+        <label>手机号码</label>
+        <input ng-model="modal.data.mobile" type="text" required>
+    </md-input-container>
+    <md-input-container flex>
+        <label>固定电话</label>
+        <input ng-model="modal.data.phone" type="text">
+    </md-input-container>
+</div>
+<div layout="row" ng-if="!(modal.data.id)">
+    <md-input-container flex>
+        <label>密码</label>
+        <input ng-model="modal.data.password" type="password" required>
+    </md-input-container>
+    <md-input-container flex>
+        <label>再次输入</label>
+        <input ng-model="modal.data.password2" type="password" required>
+    </md-input-container>
+    <p ng-if="!modal.canGo(modal.data)" style="color:red;">
+      密码输入不一致
+    </p>
+</div>
+<div layout="row">
+    <md-input-container flex>
+        <label>身份证号</label>
+        <input ng-model="modal.data.idCard" type="text">
+    </md-input-container>
+    <md-input-container flex>
+        <label>邮箱</label>
+        <input ng-model="modal.data.mail" type="text">
+    </md-input-container>
+</div>
+<div layout="row">
+    <md-select flex placeholder="部门" ng-model="modal.data.dept" required >
+        <md-option ng-repeat="dept in modal.depts" ng-value="dept">{{dept.name}}</md-option>
+    </md-select>
+    <md-select flex placeholder="角色" ng-model="modal.data.roles" multiple>
+        <md-option ng-repeat="role in modal.data.dept.roles" ng-value="role">{{role.name}}</md-option>
+    </md-select required>
+</div>

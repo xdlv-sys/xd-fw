@@ -1,0 +1,39 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+
+    <import resource="spring-properties.xml"/>
+    <context:component-scan base-package="xd">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <bean id="httpClientConnectionManager" class="org.apache.http.impl.conn.PoolingHttpClientConnectionManager">
+        <property name="maxTotal" value="${http_client_max_connection_total}"/>
+        <property name="defaultMaxPerRoute" value="${http_client_max_connection_per_host}"/>
+    </bean>
+
+    <bean class="org.springframework.jmx.export.annotation.AnnotationMBeanExporter"/>
+
+    <!-- 开启@AspectJ AOP代理 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <!-- 任务调度器 -->
+    <task:scheduler id="scheduler" pool-size="${scheduler_size}"/>
+    <!-- 任务执行器 -->
+    <task:executor id="executor" pool-size="${scheduler_thread_pool_size}"/>
+    <!--开启注解调度支持 @Async @Scheduled-->
+    <task:annotation-driven executor="executor" scheduler="scheduler" proxy-target-class="true"/>
+
+    <import resource="spring-db.xml"/>
+    <import resource="spring-security.xml"/>
+
+</beans>

@@ -1,0 +1,32 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <beans profile="dev">
+        <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+            <property name="fileEncoding" value="UTF-8"/>
+            <property name="locations">
+                <list>
+                    <value>classpath:/jdbc.properties</value>
+                    <value>classpath:/i18n.properties</value>
+                    <value>classpath:/app.properties</value>
+                </list>
+            </property>
+        </bean>
+
+    </beans>
+    <beans profile="default">
+        <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+            <property name="fileEncoding" value="UTF-8"/>
+            <property name="locations">
+                <list>
+                    <value>classpath:/jdbc.production.properties</value>
+                    <value>classpath:/i18n.properties</value>
+                    <value>classpath:/app.properties</value>
+                </list>
+            </property>
+        </bean>
+    </beans>
+
+</beans>

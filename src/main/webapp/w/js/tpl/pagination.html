@@ -1,0 +1,27 @@
+<div role="contentinfo" class="ui-grid-pager-panel" ui-grid-pager ng-show="grid.options.enablePaginationControls">
+    <div role="navigation" class="ui-grid-pager-container" style="line-height: 40px;">
+        <div role="menubar" class="ui-grid-pager-control">
+            <button type="button" role="menuitem" class="ui-grid-pager-first" ui-grid-one-bind-title="aria.pageToFirst" ui-grid-one-bind-aria-label="aria.pageToFirst" ng-click="pageFirstPageClick()" ng-disabled="cantPageBackward()">
+                <div ng-class="grid.isRTL() ? 'last-triangle' : 'first-triangle'">
+                    <div ng-class="grid.isRTL() ? 'last-bar-rtl' : 'first-bar'"></div>
+                </div>
+            </button>
+            <button type="button" role="menuitem" class="ui-grid-pager-previous" ui-grid-one-bind-title="aria.pageBack" ui-grid-one-bind-aria-label="aria.pageBack" ng-click="pagePreviousPageClick()" ng-disabled="cantPageBackward()">
+                <div ng-class="grid.isRTL() ? 'last-triangle prev-triangle' : 'first-triangle prev-triangle'"></div>
+            </button>
+            &nbsp;第
+            <input class="ui-grid-pager-control-input" style="margin:0 5px;" ng-model="grid.options.paginationCurrentPage"> 页，共{{paginationApi.getTotalPages()}}页
+            <button type="button" role="menuitem" class="ui-grid-pager-next" ui-grid-one-bind-title="aria.pageForward" ui-grid-one-bind-aria-label="aria.pageForward" ng-click="pageNextPageClick()" ng-disabled="cantPageForward()">
+                <div ng-class="grid.isRTL() ? 'first-triangle next-triangle' : 'last-triangle next-triangle'"></div>
+            </button>
+            <button type="button" role="menuitem" class="ui-grid-pager-last" ui-grid-one-bind-title="aria.pageToLast" ui-grid-one-bind-aria-label="aria.pageToLast" ng-click="pageLastPageClick()" ng-disabled="cantPageToLast()">
+                <div ng-class="grid.isRTL() ? 'first-triangle' : 'last-triangle'">
+                    <div ng-class="grid.isRTL() ? 'first-bar-rtl' : 'last-bar'"></div>
+                </div>
+            </button>
+            <button type="button" role="menuitem" ng-click="grid.options.refresh()" class="fa fa-refresh" style="color:#333;"></mk-button>
+        </div> 
+        <div class="ui-grid-pager-count-container">
+            <div class="ui-grid-pager-count"><span ng-show="grid.options.totalItems > 0">显示{{ 1 + paginationApi.getFirstRowIndex() }} <abbr ui-grid-one-bind-title="paginationThrough">-</abbr> {{paginationApi.getLastRowIndex() }} 条，共{{grid.options.totalItems}}条</span></div>
+        </div>
+    </div>

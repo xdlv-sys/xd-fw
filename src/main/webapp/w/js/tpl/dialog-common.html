@@ -1,0 +1,22 @@
+<md-dialog aria-label="" ng-style="{width:modal.width+'px'}">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>{{modal.title}}</h2>
+        </div>
+    </md-toolbar>
+    <md-dialog-content layout="column" style="padding: 20px;">
+        <form role='form' name='commonForm' novalidate="">
+            <ng-include src="modal.url"></ng-include>
+        </form>
+    </md-dialog-content>
+    <md-divider></md-divider>
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button ng-click="modal.cancel()">
+            取消
+        </md-button>
+        <md-button class="md-primary md-raised" ng-click="modal.answer('Y')" style="margin-right:20px;" ng-disabled="commonForm.$invalid || (modal.canGo && !modal.canGo(modal.data))">
+            确定
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>
