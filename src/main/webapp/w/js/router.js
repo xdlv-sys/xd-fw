@@ -1,10 +1,10 @@
-angular.module('xdApp', [
+var xdApp = angular.module('xdApp', [
     'xdApp.controllers',
     'ngAnimate',
     'ui.router',
     'ngMaterial', 'ngMessages',
     'ngAria',
-    'ui.grid', 'ui.grid.pagination', 'ui.grid.selection', 'ui.grid.autoResize','ui.grid.edit',
+    'ui.grid', 'ui.grid.pagination', 'ui.grid.selection', 'ui.grid.autoResize', 'ui.grid.edit',
     'multiselect-searchtree', 'ngPopover', 'lfNgMdFileInput'
 ]).config(['$mdDateLocaleProvider', function($mdDateLocaleProvider) {
     $mdDateLocaleProvider.months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
@@ -65,6 +65,18 @@ angular.module('xdApp', [
                 }
             ]
         };
+        $stateProvider.xdParse = function(n, c, b) {
+            b = b || 'app';
+            $stateProvider.state(n, angular.extend({
+                url: '/'+ b +'/' + n,
+                templateUrl: b + '/' + n + '.html',
+                params: { params: null },
+                resolve: r,
+                controller: n.substring(0, 1).toUpperCase() + n.substring(1) + 'Ctrl'
+            }, c));
+            return $stateProvider;
+        };
+
         $stateProvider.state('login', {
             url: '/login',
             templateUrl: 'login.html',
@@ -77,7 +89,7 @@ angular.module('xdApp', [
             url: '/conf',
             templateUrl: 'conf.html',
             controller: 'ConfCtrl',
-	    resolve: r
+            resolve: r
         });
     }
 ]);
