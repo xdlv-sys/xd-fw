@@ -5,10 +5,14 @@ body {
     height: 100%;
     margin: 0px;
     padding: 0px;
+    margin:0; 
+    height:100%;
+    overflow: hidden;
 }
 
 a:link {
     text-decoration: none;
+    color: #4F5199;
 }
 
 a:visited {
@@ -38,7 +42,7 @@ a:active {
 }
 
 .login_bg {
-    background: url(../img/bg2.png);
+    /*background: url(../img/bg.jpg);*/
     background-position: center;
     background-repeat: no-repeat
 }
@@ -70,6 +74,9 @@ a:active {
 .max_height2 {
     height: 99%;
 }
+.max_height3 {
+    max-height: 92%;
+}
 
 .pull_center {
     text-align: center;
@@ -80,7 +87,26 @@ a:active {
 .tab_tool{
     min-height:107px!important;
 }
+md-input-container.md-input-focused>label{
+    font-size: 20px;
+}
+md-input-container.md-input-has-value>label{
+    font-size: 20px;
+}
+md-input-container>label{
+    padding-bottom:3px;
+}
+/*md-tab-item>span.ng-scope{
+    
+}*/
+.md-tab{
+    font-size: 16px;
+    font-weight: bold;
+}
 
+.ui-grid-row:last-child > div > div > div {
+    border-bottom: 1px solid rgba(150, 147, 147, 0.28) !important;
+}
 
 /************************************************************/
 
@@ -90,6 +116,7 @@ a:active {
     margin-right: 8px;
     margin-bottom: 6px;
     margin-left: 0px;
+    height:46px;
 }
 
 md-tabs {
@@ -105,6 +132,12 @@ md-tabs {
     -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.06);
     -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.06);
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.06);
+}
+.lf-ng-md-file-input .lf-caption{
+    background-image: url(../img/excel.png);
+}
+.lf-ng-md-file-input-container .md-raised.lf-ng-md-file-input-button{
+    height:46px;
 }
 
 .our-lf-browse {
@@ -144,6 +177,7 @@ md-tabs {
 
 .xd_tool_bar {
     height: 58px;
+    max-height:58px;
     overflow: hidden;
 }
 .item_tool{

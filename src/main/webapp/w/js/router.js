@@ -28,6 +28,25 @@ angular.module('xdApp', [
         .accentPalette('deep-orange', {
             'default': '500'
         });*/
+    var neonRedMap = $mdThemingProvider.extendPalette('indigo', {
+        '500': '#4F5199'
+    });
+    var neonPinkMap = $mdThemingProvider.extendPalette('pink', {
+        '500': '#4F5199'
+    });
+
+    // Register the new color palette map with the name <code>neonRed</code>
+    $mdThemingProvider.definePalette('neonRed', neonRedMap);
+    $mdThemingProvider.definePalette('neonPink', neonPinkMap);
+
+    // Use that theme for the primary intentions
+    $mdThemingProvider.theme('default')
+        .primaryPalette('neonRed', {
+            'default': '500'
+        }).accentPalette('neonPink', {
+            'default': '500'
+        });;
+
     $mdIconProvider
         .defaultIconSet("./img/svg/avatars.svg", 128)
         .icon("menu", "./img/svg/menu.svg", 24)
@@ -40,18 +59,26 @@ angular.module('xdApp', [
 }]).config(['$stateProvider', '$urlRouterProvider', '$logProvider',
     function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise("/login");
-        $stateProvider.state('user', {
-            url: '/user',
-            templateUrl: 'user.html',
-            controller: 'UserCtrl'
-        }).state('login', {
+        var r = {
+            'config': ['configuration',
+                function(configuration) {
+                    return configuration.init();
+                }
+            ]
+        };
+        $stateProvider.state('login', {
             url: '/login',
             templateUrl: 'login.html',
             controller: 'LoginCtrl'
+        }).state('user', {
+            url: '/user',
+            templateUrl: 'user.html',
+            controller: 'UserCtrl'
         }).state('conf', {
             url: '/conf',
             templateUrl: 'conf.html',
-            controller: 'ConfCtrl'
+            controller: 'ConfCtrl',
+	    resolve: r
         });
     }
 ]);

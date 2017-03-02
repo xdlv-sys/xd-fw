@@ -15,6 +15,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import xd.fw.bean.User;
 import xd.fw.dao.UserRepositoryCustom;
+import xd.fw.service.FwService;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +32,9 @@ public abstract class BaseController {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    UserRepositoryCustom userRepositoryCustom;
+    protected UserRepositoryCustom userRepositoryCustom;
+    @Autowired
+    protected FwService fwService;
 
     protected final String DONE = "{\"success\":true}";
 
@@ -66,7 +69,7 @@ public abstract class BaseController {
         }
     }
 
-    static class PageContent extends ModelRequest {
+    public static class PageContent extends ModelRequest {
         long total;
 
         PageContent(Page<?> data) {

@@ -88,7 +88,7 @@ controllers.controller('UserCtrl', ['$scope', 'common', 'modal', 'module', '$fil
         angular.forEach(users, function(v) {
             params.userIds.push(v.id);
         });
-        common.post('/user/deleteUser.cmd', params, {
+        common.delete('/user/deleteUser.cmd', params, {
             success: function() {
                 $scope.userGrid.refresh();
             }

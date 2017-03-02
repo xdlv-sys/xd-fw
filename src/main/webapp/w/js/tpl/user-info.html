@@ -1,34 +1,54 @@
 <div layout="row">
     <md-input-container flex>
         <label>用户名</label>
-        <input ng-model="modal.data.name" type="text" required>
+        <input name="name" ng-model="modal.data.name" type="text" required>
+        <div ng-messages="commonForm.name.$error" role="alert" multiple>
+            <div ng-message="required" class="my-message">用户名不能为空</div>
+        </div>
     </md-input-container>
     <md-input-container flex>
-        <label>出身日期</label>
-        <md-datepicker ng-model="modal.data.birthday" required xd-date></md-datepicker>
+        <label>出生日期</label>
+        <md-datepicker name="birthday" ng-model="modal.data.birthday" required xd-date></md-datepicker>
+        <div ng-messages="commonForm.birthday.$error" role="alert" multiple>
+            <div ng-message="required" class="my-message">出身日期不能为空</div>
+        </div>
     </md-input-container>
 </div>
 <div layout="row">
     <md-input-container flex>
-        <md-select ng-model="modal.data.sex" required>
-            <label>性别</label>
+        <label>性别</label>
+        <md-select name="sex" ng-model="modal.data.sex" required>
             <md-option ng-value="1">男</md-option>
             <md-option ng-value="0">女</md-option>
         </md-select>
+        <div ng-messages="commonForm.sex.$error" role="alert" multiple>
+            <div ng-message="required" class="my-message">性别不能为空</div>
+        </div>
     </md-input-container>
     <md-input-container flex>
         <label>入职时间</label>
-        <md-datepicker ng-model="modal.data.entryTime" required xd-date></md-datepicker>
+        <md-datepicker name="entryTime" ng-model="modal.data.entryTime" required xd-date></md-datepicker>
+        <div ng-messages="commonForm.entryTime.$error" role="alert" multiple>
+            <div ng-message="required" class="my-message">不能为空</div>
+        </div>
     </md-input-container>
 </div>
 <div layout="row">
     <md-input-container flex>
         <label>手机号码</label>
-        <input ng-model="modal.data.mobile" type="text" required>
+        <input name="mobile" ng-model="modal.data.mobile" type="text" required ng-pattern="/^(1\d{10})$/">
+        <div ng-messages="commonForm.mobile.$error" role="alert" multiple>
+            <div ng-message="required" class="my-message">手机号码不能为空</div>
+            <div ng-message="pattern" class="my-message">手机号格式不正确</div>
+        </div>
     </md-input-container>
+
     <md-input-container flex>
         <label>固定电话</label>
-        <input ng-model="modal.data.phone" type="text">
+        <input name="phone" ng-model="modal.data.phone" type="text" ng-pattern="/\d{3}-\d{8}|\d{4}-\d{7}/">
+        <div ng-messages="commonForm.phone.$error" role="alert" multiple>
+            <div ng-message="pattern" class="my-message">固定电话格式:025-888888</div>
+        </div>
     </md-input-container>
 </div>
 <div layout="row" ng-if="!(modal.data.id)">
@@ -41,21 +61,27 @@
         <input ng-model="modal.data.password2" type="password" required>
     </md-input-container>
     <p ng-if="!modal.canGo(modal.data)" style="color:red;">
-      密码输入不一致
+        密码输入不一致
     </p>
 </div>
 <div layout="row">
     <md-input-container flex>
         <label>身份证号</label>
-        <input ng-model="modal.data.idCard" type="text">
+        <input name="idCard" ng-model="modal.data.idCard" type="text" ng-pattern="/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/">
+        <div ng-messages="commonForm.idCard.$error" role="alert" multiple>
+            <div ng-message="pattern" class="my-message">请输入正确的身份证号码</div>
+        </div>
     </md-input-container>
     <md-input-container flex>
         <label>邮箱</label>
-        <input ng-model="modal.data.mail" type="text">
+        <input name="mail" ng-model="modal.data.mail" type="email">
+        <div ng-messages="commonForm.mail.$error" role="alert" multiple>
+            <div ng-message="email" class="my-message">邮箱地址不正确</div>
+        </div>
     </md-input-container>
 </div>
 <div layout="row">
-    <md-select flex placeholder="部门" ng-model="modal.data.dept" required >
+    <md-select flex placeholder="部门" ng-model="modal.data.dept" required>
         <md-option ng-repeat="dept in modal.depts" ng-value="dept">{{dept.name}}</md-option>
     </md-select>
     <md-select flex placeholder="角色" ng-model="modal.data.roles" multiple>

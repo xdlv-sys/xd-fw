@@ -68,16 +68,4 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
         FwUtil.replaceOrAddListItem(dept.getRoles(), record, (t,o)->t.getId().equals(o.getId()));
         deptRepository.save(dept);
     }
-
-    @Override
-    @Transactional
-    public void runSessionCommit(SessionCommit sessionCommit) {
-        sessionCommit.process();
-    }
-
-    @Override
-    @Transactional
-    public <T> T runSessionProcess(SessionProcessor<T> processor) {
-        return processor.process();
-    }
 }

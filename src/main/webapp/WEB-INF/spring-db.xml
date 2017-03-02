@@ -9,7 +9,7 @@
                      http://www.springframework.org/schema/data/jpa
                      http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <jpa:repositories base-package="xd.fw.dao" repository-impl-postfix="Impl"/>
+    <jpa:repositories base-package="xd.fw.dao,xd.app.dao" repository-impl-postfix="Impl"/>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="packagesToScan">

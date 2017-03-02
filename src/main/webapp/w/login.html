@@ -1,16 +1,12 @@
 <div layout="column" flex class="login_bg" layout-padding layout-align="center center">
-    <img src="img/logo.png" width="100px" height="100px" />
-  
-    <md-input-container class="md-block">
-      <label class="fa fa-user">&nbsp;&nbsp;&nbsp;&nbsp;用户名</label>
-      <input ng-model="user.name" type="text">
+    <img src="img/logo.jpg" width="100px" height="100px" style="margin-bottom:15px;"/>
+    <md-input-container class="md-block md-icon-float">
+        <label class="fa fa-user">&nbsp;&nbsp;&nbsp;&nbsp;用户名</label>
+        <input ng-model="user.name" type="text">
     </md-input-container>
-
-   <md-input-container class="md-icon-float md-block">
-      <label class="fa fa-user-secret">&nbsp;&nbsp;&nbsp;&nbsp;密码</label>
-      <input ng-model="user.password" type="password" autocomplete="off">
+    <md-input-container class="md-icon-float md-block">
+        <label class="fa fa-user-secret">&nbsp;&nbsp;&nbsp;&nbsp;密码</label>
+        <input ng-model="user.password" type="password" autocomplete="off">
     </md-input-container>
-
-    <md-button class="md-primary md-raised" ng-click="login()" style="width:200px; font-size:20px;font-weight:bold;">登陆</md-button>
-
+    <md-button class="md-primary md-raised" ng-click="login()" style="width:200px; font-size:20px;font-weight:bold;">登录</md-button>
 </div>

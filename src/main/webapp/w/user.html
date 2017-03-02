@@ -1,27 +1,27 @@
-<md-tabs flex>
+<md-tabs flex layout-fill>
     <md-tab label="用户">
-        <md-content layout="column" class="max_height">
+        <md-tab-content layout-fill layout="column">
             <div layout="row" class="xd_tool_bar">
                 <md-button class="md-primary md-raised" ng-click="addUser()">新增用户</md-button>
                 <md-button class="md-primary md-raised" ng-click="modUser()" ng-disabled="userGrid.selection.getSelectedRows().length!==1">修改用户</md-button>
                 <md-button class="md-primary md-raised" ng-click="delUser()" ng-disabled="userGrid.selection.getSelectedRows().length<1">删除用户</md-button>
             </div>
-            <div flex ui-grid="userGrid" ui-grid-pagination ui-grid-selection ui-grid-auto-resize class="max_height"></div>
-        </md-content>
+            <div ui-grid="userGrid" ui-grid-pagination ui-grid-selection ui-grid-auto-resize class="max_height3"></div>
+        </md-tab-content>
     </md-tab>
     <md-tab label="部门">
-        <md-content class="max_height" layout="column" ng-controller="DeptCtrl">
-            <div flex ui-grid="deptGrid" ui-grid-pagination ui-grid-selection class="max_height"></div>
-        </md-content>
+        <md-tab-content layout-fill layout="column" ng-controller="DeptCtrl">
+            <div ui-grid="deptGrid" ui-grid-pagination ui-grid-selection class="max_height"></div>
+        </md-tab-content>
     </md-tab>
     <md-tab label="角色">
-        <md-content class="max_height" layout="column" ng-controller="RoleCtrl">
+        <md-tab-content layout-fill layout="column" ng-controller="RoleCtrl">
             <div layout="row" class="xd_tool_bar">
                 <md-button class="md-primary md-raised" ng-click="addRole()">新增角色</md-button>
                 <md-button class="md-primary md-raised" ng-click="modRole()" ng-disabled="roleGrid.selection.getSelectedRows().length!==1">修改角色</md-button>
                 <md-button class="md-primary md-raised" ng-click="delRole()" ng-disabled="roleGrid.selection.getSelectedRows().length<1">删除角色</md-button>
             </div>
-            <div flex ui-grid="roleGrid" ui-grid-pagination ui-grid-selection class="max_height"></div>
-        </md-content>
+            <div ui-grid="roleGrid" ui-grid-pagination ui-grid-selection class="max_height3"></div>
+        </md-tab-content>
     </md-tab>
 </md-tabs>

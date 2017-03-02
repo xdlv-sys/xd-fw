@@ -4,6 +4,7 @@ create table t_primary_key(
   table_name VARCHAR(32) not null primary key,
   current_id int not null
 );
+
 drop table IF EXISTS t_user;
 create table t_user(
   id int not null primary key,
@@ -56,6 +57,14 @@ create table t_dept_role(
   dept_id int not null,
   role_id int not null
 );
+drop table IF EXISTS t_dynamic_conf;
+create table t_dynamic_conf(
+  id int primary key,
+  group_no int,
+  conf_name varchar(60) ,
+  conf_value varchar(128),
+  conf_desc varchar(128)
+)ENGINE = INNODB;
 
 insert into t_dept values(0,-1,'公司');
 insert into t_user(id,name,password,sex,mail,dept) values(-10,'a','0cc175b9c0f1b6a831c399e269772661',0,'a@a.com',0);

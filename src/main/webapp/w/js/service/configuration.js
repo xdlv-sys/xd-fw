@@ -17,18 +17,21 @@ services.service('configuration', ['common', function(common) {
                 configurations[key] = [];
             }
             configurations[key][index] = {
-                index: index, 
+                index: index,
                 value: v.confValue
             };
-
         });
+
     };
-    common.loadPage('/conf/obtainConfigs.cmd', {
-        page: 1,
-        limit: 99999
-    }, {
-        success: me.parse
-    });
+    this.init = function() {
+        if (me.flag){
+            return null;
+        }
+        return common.loadAllPage('/conf/obtainConfigs.cmd', function(data) {
+            me.parse(data);
+            me.flag = true;
+        });
+    }
 
     this.makeKey = function(groupNo, name) {
         return groupNo + '-' + name;
@@ -37,10 +40,10 @@ services.service('configuration', ['common', function(common) {
     this.i18n = function(groupNo, name, value) {
         return this.configurations[this.makeKey(groupNo, name)][value].value;
     };
-    this.group = function(groupNo, name){
+    this.group = function(groupNo, name) {
         var ret = [];
-        angular.forEach(this.configurations[this.makeKey(groupNo, name)], function(v){
-            if (!angular.isBlank(v)){
+        angular.forEach(this.configurations[this.makeKey(groupNo, name)], function(v) {
+            if (!angular.isBlank(v)) {
                 ret.push(angular.copy(v));
             }
         });

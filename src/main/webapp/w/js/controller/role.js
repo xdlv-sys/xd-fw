@@ -81,7 +81,7 @@ controllers.controller('RoleCtrl', ['$scope', 'common', 'modal', 'module', '$fil
         angular.forEach(roles, function(v) {
             params.roleIds.push(v.id);
         });
-        common.post('/role/deleteRole.cmd', params, {
+        common.delete('/role/deleteRole.cmd', params, {
             success: function() {
                 $scope.roleGrid.refresh();
             }

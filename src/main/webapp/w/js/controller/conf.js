@@ -50,7 +50,7 @@ controllers.controller('ConfCtrl', ['$scope', 'common', 'modal', 'module', '$fil
         angular.forEach(confs, function(v) {
             params.confIds.push(v.id);
         });
-        common.post('/conf/deleteConfig.cmd', params, {
+        common.delete('/conf/deleteConfig.cmd', params, {
             success: function() {
                 $scope.confGrid.refresh();
             }

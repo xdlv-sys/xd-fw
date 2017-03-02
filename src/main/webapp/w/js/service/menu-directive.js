@@ -49,22 +49,34 @@
      return function(input, n) {
          return input.toFixed(n || 2);
      };
- }).directive('xdDate', ['$filter',function($filter) {
+ }).directive('xdDate', ['$filter','$compile', function($filter,$compile) {
      //special for md-datepicker
      return {
          restrict: 'A',
          require: 'ngModel',
          priority: 1,
+
          link: function(scope, element, attr, ngModel) {
-             ngModel.$parsers.push(function(d){
-                return $filter('date')(d, 'yyyy-MM-dd');
+             ngModel.$parsers.push(function(d) {
+                 return $filter('date')(d, 'yyyy-MM-dd');
              });
-             ngModel.$formatters.push(function(text){
-                if (angular.isBlank(text)){
-                    return '';
-                }
-                return new Date(text);
+             ngModel.$formatters.push(function(text) {
+                 if (angular.isBlank(text)) {
+                     return '';
+                 }
+                 return new Date(text);
              });
-         }
+         }/*,
+         compile: function(element, attributes) {
+             if (attributes.xdDate === 'month') {
+                 element.attr('md-mode', 'month');
+                 element.attr('md-date-locale', 'monthFormat');
+             }
+             element.removeAttr('xd-date');
+             var fn = $compile(element);
+             return function(scope) {
+                 fn(scope);
+             };
+         }*/
      };
  }]);

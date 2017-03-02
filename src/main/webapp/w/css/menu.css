@@ -20,7 +20,7 @@ md-sidenav {
 }
 
 .side-menu .md-button.active {
-  color: rgb(63,81,181);
+  color: #4F5199;
 }
 
 .side-menu .menu-toggle-list a.md-button {
@@ -92,6 +92,6 @@ md-sidenav {
 
 .menu-heading{
   color: gray;
-  font-size: 10px;
+  font-size: 12px;
   margin-left: 5px;
 }

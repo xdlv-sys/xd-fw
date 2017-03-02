@@ -46,6 +46,14 @@ services.service('common', ['$http', 'modal', '$q', '$timeout', function($http, 
         }
         return this.post(url, params, call);
     };
+    this.delete = function(url, params, call){
+        var me = this;
+        modal.confirm('确认要删除吗？', {
+            postive: function(){
+                me.post(url,params, call);
+            }
+        });
+    };
     this.post = function(url, params, call) {
         //remove all undefined value
         params = params || {};
@@ -90,7 +98,7 @@ services.service('common', ['$http', 'modal', '$q', '$timeout', function($http, 
         }).then(function(result) {
             if (result && result.data.errorMsg) {
                 if (conf && conf.fail) {
-                    conf.fail(err);
+                    conf.fail(result.data.errorMsg);
                 } else {
                     modal.alert('操作失败：' + result.data.errorMsg);
                 }
