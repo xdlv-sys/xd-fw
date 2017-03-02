@@ -1,4 +1,4 @@
-controllers.controller('taxController', function($scope, $rootScope, common, modal, menu, $state, $filter, $mdSidenav, $location, configuration) {
+controllers.controller('xdController', function($scope, $rootScope, common, modal, menu, $state, $filter, $mdSidenav, $location, configuration) {
 
     //functions for menu-link and menu-toggle
     this.isOpen = $scope.isOpen = function(section) {

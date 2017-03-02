@@ -3,10 +3,8 @@ body {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     height: 100%;
-    margin: 0px;
-    padding: 0px;
-    margin:0; 
-    height:100%;
+    margin: 0;
+    padding: 0;
     overflow: hidden;
 }
 
@@ -43,8 +41,7 @@ a:active {
 
 .login_bg {
     /*background: url(../img/bg.jpg);*/
-    background-position: center;
-    background-repeat: no-repeat
+    background: no-repeat center;
 }
 
 .tool_button {
@@ -112,23 +109,18 @@ md-input-container>label{
 
 .md-button {
     padding: 0 16px;
-    margin-top: 6px;
-    margin-right: 8px;
-    margin-bottom: 6px;
-    margin-left: 0px;
+    margin: 6px 8px 6px 0;
     height:46px;
 }
 
-md-tabs {
-    md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
-        min-height: 0px;
-    }
+md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
+    min-height: 0;
 }
 
 .lf-ng-md-file-input .lf-ng-md-file-input-container {
     -moz-border-radius: 5px;
     -webkit-border-radius: 1px;
-    border-radius: 0px;
+    border-radius: 0;
     -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.06);
     -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.06);
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.06);
