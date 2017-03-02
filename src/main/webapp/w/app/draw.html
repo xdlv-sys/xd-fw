@@ -1,0 +1,11 @@
+<md-content flex layout="column" class="max_height">
+    <div layout="row" class="xd_tool_bar">
+        
+        <md-button class="md-primary md-raised" ng-click="startDraw()" ng-disabled="grid.selection.getSelectedRows().length!==1">开始提问</md-button>
+
+        <md-button class="md-primary md-raised" ng-click="addDraw()">新增提问</md-button>
+        <md-button class="md-primary md-raised" ng-click="modDraw()" ng-disabled="grid.selection.getSelectedRows().length!==1">修改提问</md-button>
+        <md-button class="md-primary md-raised" ng-click="delDraw()" ng-disabled="grid.selection.getSelectedRows().length<1">删除提问</md-button>
+    </div>
+    <div flex ui-grid="grid" ui-grid-pagination ui-grid-selection ui-grid-auto-resize class="max_height"></div>
+</md-content>

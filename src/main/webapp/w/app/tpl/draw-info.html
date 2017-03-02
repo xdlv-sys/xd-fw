@@ -1,0 +1,28 @@
+<div layout="row">
+    <md-input-container flex>
+        <label>名称</label>
+        <input ng-model="modal.data.name" type="text" required>
+    </md-input-container>
+    <md-input-container flex>
+        <md-checkbox ng-model="modal.data.froala" type="text">样式</md-checkbox>
+    </md-input-container>
+</div>
+<div layout="row">
+    <md-input-container flex>
+        <label>耗时(单位秒)</label>
+        <input ng-model="modal.data.duration" type="number" required>
+    </md-input-container>
+    <md-input-container flex>
+        <md-select ng-model="modal.data.reset" required>
+            <label>放回</label>
+            <md-option ng-value="1">是</md-option>
+            <md-option ng-value="0">否</md-option>
+        </md-select>
+    </md-input-container>
+</div>
+<div layout="row">
+    <md-button class="md-primary" ng-click="modal.from.downloadTemplate()">
+        下载模板
+    </md-button>
+    <lf-ng-md-file-input flex name="files00" class="upload_file" aria-label="fileupload" lf-files='modal.data.importFile' lf-placeholder="选择Excel文件上传" lf-browse-label="选择文件" lf-totalsize="5MB" progress lf-required> </lf-ng-md-file-input>
+</div>

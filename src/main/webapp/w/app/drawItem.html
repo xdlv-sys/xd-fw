@@ -1,0 +1,9 @@
+<md-content flex layout="column" class="max_height">
+    <div layout="row" class="xd_tool_bar">
+        <md-button class="md-primary md-raised fa fa-backward" ng-click="back()">&nbsp;返回</md-button>
+        <md-button class="md-primary md-raised" ng-click="addDrawItem()">新增</md-button>
+        <md-button class="md-primary md-raised" ng-click="modDrawItem()" ng-disabled="grid.selection.getSelectedRows().length!==1">修改</md-button>
+        <md-button class="md-primary md-raised" ng-click="delDrawItem()" ng-disabled="grid.selection.getSelectedRows().length<1">删除</md-button>
+    </div>
+    <div flex ui-grid="grid" ui-grid-pagination ui-grid-selection ui-grid-auto-resize class="max_height"></div>
+</md-content>

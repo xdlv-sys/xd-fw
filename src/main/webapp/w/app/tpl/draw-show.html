@@ -1,0 +1,27 @@
+<div layout="column" style="background: url(img/bg.gif); background-repeat: repeat-x; background-color: rgb(243, 252, 255); height: 450px;">
+    <div style="text-align:center;color:#f0f;font-size:54px;height:180px;line-height:180px;font-weight:bold;">在线提问
+    </div>
+    <div layout="row">
+        <div flex></div>
+    	<div style="text-align:center;color:#900;height:50px;line-height:50px;font-size: 32px;font-weight: bold;" ng-bind-html="modal.waitFlag"> </div>
+    	<md-button class="md-primary fa fa-check" ng-show="modal.checkFlag" style="min-height:3px;min-width:0;font-size:24px;" ng-click="submitScore(currentItem,0,1,true)"></md-button>
+    	<div flex></div>
+    </div>
+    
+    <div flex></div>
+    <md-button class="md-primary md-raised" ng-click="beginDraw()" style="margin:0 auto;height: 50px;line-height: 50px;font-size: 32px;font-weight: bold;background-color: pink;">
+        开始提问
+    </md-button>
+    <md-button class="md-primary" ng-click="showGrid()" style="margin:10px auto;">
+        排行显示
+    </md-button>
+
+    <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
+        <md-toolbar class="md-theme-light">
+            <h1 class="md-toolbar-tools">名单列表</h1>
+        </md-toolbar>
+        <md-content layout-padding>
+            <div ui-grid="grid" ui-grid-auto-resize style="height:500px;"></div>
+        </md-content>
+    </md-sidenav>
+</div>

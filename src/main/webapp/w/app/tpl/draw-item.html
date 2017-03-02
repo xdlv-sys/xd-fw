@@ -1,0 +1,17 @@
+<textarea froala="modal.froalaConfig" ng-if="modal.draw.froala" ng-model="modal.data.content"></textarea>
+
+<div layout="row">
+    <md-input-container flex ng-if="!modal.draw.froala">
+        <label>姓名</label>
+        <input ng-model="modal.data.content" type="text" required>
+    </md-input-container>
+
+    <md-input-container flex>
+        <label>点赞</label>
+        <input ng-model="modal.data.heart" type="number" required>
+    </md-input-container>
+    <md-input-container flex>
+        <label>星</label>
+        <input ng-model="modal.data.star" type="number" required>
+    </md-input-container>
+</div>
