@@ -15,7 +15,7 @@
         <md-button ng-click="modal.cancel()">
             取消
         </md-button>
-        <md-button class="md-primary md-raised" ng-click="modal.answer('Y')" style="margin-right:20px;" ng-disabled="commonForm.$invalid || (modal.canGo && !modal.canGo(modal.data))">
+        <md-button class="md-primary md-raised" ng-if="!modal.hideConfirmButton" ng-click="modal.answer('Y')" style="margin-right:20px;" ng-disabled="commonForm.$invalid || (modal.canGo && !modal.canGo(modal.data))">
             确定
         </md-button>
     </md-dialog-actions>

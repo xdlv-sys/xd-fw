@@ -6,12 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title></title>
+    <%@include file="app/js/pre.html" %>
     <%@include file="head.cdn.html" %>
     <%@include file="comp.html" %>
-    <%@include file="app/comp.html" %>
+    <%@include file="app/js/comp.html" %>
 
     <%@include file="fw.html" %>
-    <%@include file="app/app.html" %>
+    <%@include file="app/js/app.html" %>
 
     <!-- <script type="text/javascript" src="js/cache/min/app.js"></script> -->
 </head>
