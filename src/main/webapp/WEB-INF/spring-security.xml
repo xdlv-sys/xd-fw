@@ -5,15 +5,15 @@
 						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
     <s:http pattern="/user/version.cmd" security="none"/>
-    <s:http pattern="/w/index.html" security="none"/>
+    <s:http pattern="/w/index.jsp" security="none"/>
 
     <s:http auto-config="false" >
         <s:intercept-url pattern="*.cmd" access="hasRole('ROLE_EXE')"/>
-        <s:form-login login-page="/w/index.html" login-processing-url="/user/userLogin.cmd"
+        <s:form-login login-page="/w/index.jsp" login-processing-url="/user/userLogin.cmd"
                       authentication-success-forward-url="/user/userLogin.cmd"
                       username-parameter="name" password-parameter="password"/>
         <s:logout delete-cookies="true" invalidate-session="true"
-                  logout-success-url="/w/index.html" logout-url="/user/userLogout.cmd"/>
+                  logout-success-url="/w/index.jsp" logout-url="/user/userLogout.cmd"/>
         <s:csrf disabled="true"/>
         <s:anonymous enabled="false"/>
         <s:custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>

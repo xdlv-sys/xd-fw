@@ -58,6 +58,6 @@
         <location>/error.cmd</location>
     </error-page>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>w/index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

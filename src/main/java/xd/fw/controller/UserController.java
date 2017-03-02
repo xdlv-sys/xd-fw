@@ -37,6 +37,12 @@ public class UserController extends BaseController{
         return modelRequest(userDetail.getUser());
 
 	}
+    @RequestMapping("sessionUser")
+    @ResponseBody
+    public ModelRequest sessionUser()throws Exception {
+        return userLogin();
+
+    }
     @RequestMapping("userLogout")
 	public String userLogout(){
         //session.removeAttribute(USER_KEY);

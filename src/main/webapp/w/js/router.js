@@ -5,8 +5,7 @@ angular.module('xdApp', [
     'ngMaterial', 'ngMessages',
     'ngAria',
     'ui.grid', 'ui.grid.pagination', 'ui.grid.selection', 'ui.grid.autoResize','ui.grid.edit',
-    'multiselect-searchtree', 'ngPopover',
-    'ui.tree', 'lfNgMdFileInput'
+    'multiselect-searchtree', 'ngPopover', 'lfNgMdFileInput'
 ]).config(['$mdDateLocaleProvider', function($mdDateLocaleProvider) {
     $mdDateLocaleProvider.months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
     $mdDateLocaleProvider.shortMonths = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];

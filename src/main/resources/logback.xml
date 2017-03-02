@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="5 seconds">
 
-    <property name="DEV_HOME" value="../logs"/>
+    <property name="DEV_HOME" value="${CATALINA_BASE}/logs"/>
+    <property name="LOG_NAME" value="log"/>
     <property name="FORMAT" value="%d{yyyy-MM-dd HH:mm:ss} [%logger{0}] %-5level %msg%n"/>
     <property name="MAX_HISTORY" value="5"/>
     <property name="MAX_SIZE" value="1MB"/>
@@ -19,7 +20,7 @@
 
     <appender name="FILE-AUDIT"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${DEV_HOME}/fw-log.log</file>
+        <file>${DEV_HOME}/${LOG_NAME}.log</file>
         <encoder>
             <pattern>
                 ${FORMAT}
@@ -28,7 +29,7 @@
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily -->
-            <fileNamePattern>${DEV_HOME}/archived/log.%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
+            <fileNamePattern>${DEV_HOME}/archived/${LOG_NAME}.%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
             <maxHistory>${MAX_HISTORY}</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -43,7 +44,7 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>WARN</level>
         </filter>
-        <file>${DEV_HOME}/fw-error.log</file>
+        <file>${DEV_HOME}/${LOG_NAME}-error.log</file>
         <encoder>
             <pattern>
                 ${FORMAT}
@@ -52,7 +53,7 @@
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily -->
-            <fileNamePattern>${DEV_HOME}/archived/error.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <fileNamePattern>${DEV_HOME}/archived/${LOG_NAME}-error.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
             <maxHistory>${MAX_HISTORY}</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">

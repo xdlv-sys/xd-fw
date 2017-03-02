@@ -162,11 +162,20 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
     };
 
     //refresh
-    common.post('/user/sessionUser.cmd', {}, function(data) {
-        if (data.data) {
-            $scope.$emit("loginSuccess", data.data, window.location.hash);
-        } else {
-            $state.go('login');
-        }
+    var hash = window.location.hash;
+    if (hash !== '#/login'){
+        common.post('/user/sessionUser.cmd', {}, function(data) {
+            if (data.data) {
+                $scope.$emit("loginSuccess", data.data, window.location.hash);
+            } else {
+                $state.go('login');
+            }
+        });
+    }
+
+    common.post('/user/version.cmd', {}, function(data) {
+        $scope.appName = data.name;
+        document.title = $scope.appName;
     });
+
 });
