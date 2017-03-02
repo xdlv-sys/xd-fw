@@ -37,6 +37,13 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
             $rootScope.depts = data.data;
         });
 
+        $rootScope.firstSelectedRow = function(){
+            return this.grid.selection.getSelectedRows()[0];
+        };
+        $rootScope.allSelectedRow = function(){
+            return this.grid.selection.getSelectedRows();
+        };
+
         $rootScope.back = function() {
             history.back();
         };
