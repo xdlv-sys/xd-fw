@@ -1,9 +1,9 @@
 package xd.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import xd.app.bean.Draw;
@@ -56,6 +56,13 @@ public class DrawItemController extends BaseController {
     public String deleteDraws(int[] drawItemIds) throws Exception {
         Arrays.stream(drawItemIds).forEach(id -> drawItemRepository.delete(id));
         return DONE;
+    }
+
+    @RequestMapping("obtainDrawItems")
+    @ResponseBody
+    public PageContent obtainDrawItems(int drawId, int page, int limit){
+        Page<DrawItem> list = drawItemRepository.findByDrawId(drawId,pageRequest(page, limit));
+        return page(list);
     }
 
     @RequestMapping("uploadImage")

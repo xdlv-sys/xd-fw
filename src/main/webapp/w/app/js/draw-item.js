@@ -1,7 +1,7 @@
 controllers.controller('DrawItemCtrl', function($scope, common, modal, module, $filter, util, $interval, $stateParams) {
 
     $scope.loadData = function(page, limit) {
-        common.loadPage('/draw/obtainDrawItems.cmd', {
+        common.loadPage('/drawItem/obtainDrawItems.cmd', {
             page: page,
             limit: limit,
             drawId: $stateParams.params.id

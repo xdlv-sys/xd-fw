@@ -84,13 +84,4 @@ public class DrawController extends BaseController{
     public ModelAndView downloadTemplate() throws Exception{
         return new ModelAndView(new ExcelStreamView("/draw.xlsx", "template.xlsx"){});
     }
-
-    @RequestMapping("obtainDrawItems")
-    @ResponseBody
-    public PageContent obtainDrawItems(int drawId){
-        return fwService.runSessionProcess(()->{
-            Draw draw = drawRepository.findOne(drawId);
-            return page(draw.getItems());
-        });
-    }
 }
