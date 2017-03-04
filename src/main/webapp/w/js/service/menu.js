@@ -37,6 +37,7 @@ services.factory('menu', ['$state', function($state) {
                 }
                 parent[pageName].push(map[id]);
                 parent.type = 'toggle';
+                map[id].parent = parent;
             });
             if (load) {
                 this.loadMenu(map[0][pageName]);

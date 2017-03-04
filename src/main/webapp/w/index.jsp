@@ -7,7 +7,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title></title>
     <%@include file="app/js/pre.html" %>
-    <%@include file="head.cdn.html" %>
+    <%@include file="head.local.html" %>
     <%@include file="comp.html" %>
     <%@include file="app/js/comp.html" %>
 
