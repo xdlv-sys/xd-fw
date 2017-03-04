@@ -170,7 +170,7 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
 
     //refresh
     var hash = window.location.hash;
-    if (hash !== '#/login'){
+    if (hash !== '' && hash !== '#/login'){
         common.post('/user/sessionUser.cmd', {}, function(data) {
             if (data.data) {
                 $scope.$emit("loginSuccess", data.data, window.location.hash);
