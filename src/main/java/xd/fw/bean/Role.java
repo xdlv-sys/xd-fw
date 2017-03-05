@@ -10,9 +10,8 @@ import java.util.List;
 @Table(name = "t_role")
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "role_id")
-    @TableGenerator(name = "role_id", table = "t_primary_key",
-            pkColumnName = "table_name", valueColumnName = "current_id")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Role")
+    @TableGenerator(name = "Role")
     private Integer id;
     @Column(name="name")
     private String name;
