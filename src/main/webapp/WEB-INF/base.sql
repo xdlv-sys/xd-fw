@@ -65,6 +65,8 @@ create table t_dynamic_conf(
   conf_value varchar(128),
   conf_desc varchar(128)
 )ENGINE = INNODB;
+insert into t_dynamic_conf values(-10,'0','confirm.1','是','通用确认');
+insert into t_dynamic_conf values(-9,'0','confirm.2','否','通用确认');
 
 insert into t_dept values(0,-1,'公司');
 insert into t_user(id,name,password,sex,mail,dept) values(-10,'a','0cc175b9c0f1b6a831c399e269772661',0,'a@a.com',0);

@@ -11,9 +11,8 @@ import java.util.List;
 @Table(name = "t_user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "user_id")
-    @TableGenerator(name = "user_id", table = "t_primary_key",
-            pkColumnName = "table_name", valueColumnName = "current_id")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "user")
+    @TableGenerator(name = "user")
     private Integer id;
 
     private String name;
@@ -25,6 +24,7 @@ public class User {
     private String mobile;
     private String phone;
     private String idCard;
+    private String mail;
     @ManyToOne
     @JoinColumn(name = "dept")
     private Dept dept;

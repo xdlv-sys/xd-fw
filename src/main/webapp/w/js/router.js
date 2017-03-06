@@ -65,6 +65,18 @@ angular.module('xdApp', [
                 }
             ]
         };
+        $stateProvider.xdParse = function(n, c, b) {
+            b = b || 'app';
+            $stateProvider.state(n, angular.extend({
+                url: '/'+ b +'/' + n,
+                templateUrl: b + '/' + n + '.html',
+                params: { params: null },
+                resolve: r,
+                controller: n.substring(0, 1).toUpperCase() + n.substring(1) + 'Ctrl'
+            }, c));
+            return $stateProvider;
+        };
+
         $stateProvider.state('login', {
             url: '/login',
             templateUrl: 'login.html',
@@ -77,7 +89,7 @@ angular.module('xdApp', [
             url: '/conf',
             templateUrl: 'conf.html',
             controller: 'ConfCtrl',
-	    resolve: r
+            resolve: r
         });
     }
 ]);

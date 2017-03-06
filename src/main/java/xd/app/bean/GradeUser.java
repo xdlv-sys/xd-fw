@@ -1,8 +1,8 @@
 package xd.app.bean;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import xd.fw.bean.User;
+
+import javax.persistence.*;
 
 /**
  * Created by xd on 2017/3/5.
@@ -13,6 +13,7 @@ public class GradeUser {
     @Id
     private Integer id;
     private Integer organization;
+    private String fullName;
     private String code;
     private String location;
     private Integer category;
@@ -20,12 +21,32 @@ public class GradeUser {
     private Integer contractType;
     private Integer inService;
 
+    @OneToOne(cascade={CascadeType.ALL})
+    @JoinColumn(name="id")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Integer getOrganization() {
