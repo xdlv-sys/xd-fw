@@ -6,10 +6,8 @@ import javax.persistence.*;
 @Table(name = "t_dynamic_conf")
 public class DynamicConf {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "pk_dynamic_conf_id")
-    @TableGenerator(name = "pk_dynamic_conf_id", table = "t_primary_key",
-            pkColumnName = "table_name", valueColumnName = "current_id",
-            initialValue = 100, allocationSize = 100)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "DynamicConf")
+    @TableGenerator(name = "DynamicConf")
     private int id;
     @Column(name = "group_no")
     private int groupNo;

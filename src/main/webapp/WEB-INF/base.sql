@@ -1,8 +1,8 @@
 -- CREATE DATABASE xapp DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-drop table IF EXISTS t_primary_key;
-create table t_primary_key(
-  table_name VARCHAR(32) not null primary key,
-  current_id int not null
+drop table IF EXISTS hibernate_sequences;
+create table hibernate_sequences(
+  sequence_name VARCHAR(64) not null primary key,
+  next_val int not null
 );
 
 drop table IF EXISTS t_user;
