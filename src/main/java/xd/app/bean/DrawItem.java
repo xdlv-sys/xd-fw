@@ -11,9 +11,8 @@ import javax.persistence.*;
 @Table(name = "t_draw_item")
 public class DrawItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "draw_item_id")
-    @TableGenerator(name = "draw_item_id", table = "t_primary_key",
-            pkColumnName = "table_name", valueColumnName = "current_id")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "DrawItem")
+    @TableGenerator(name = "DrawItem")
     private Integer id;
     private String name;
     private String content;

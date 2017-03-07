@@ -13,9 +13,8 @@ import java.util.List;
 @Table(name = "t_draw")
 public class Draw {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "draw_id")
-    @TableGenerator(name = "draw_id", table = "t_primary_key",
-            pkColumnName = "table_name", valueColumnName = "current_id")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Draw")
+    @TableGenerator(name = "Draw")
     private Integer id;
     private String name;
     private Long duration;
