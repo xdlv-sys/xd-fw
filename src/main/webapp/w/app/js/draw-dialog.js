@@ -51,7 +51,7 @@ controllers.controller('DrawDialogCtrl', function($scope, common, modal, module,
     };
 
     $scope.loadData = function() {
-        common.loadAllPage('/draw/obtainDrawItems.cmd', function(data) {
+        common.loadAllPage('/drawItem/obtainDrawItems.cmd', function(data) {
             //var top = 10;
             data.data.sort(function(a, b) {
                 return b.heart * 3 + b.star - a.star - a.heart * 3;

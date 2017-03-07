@@ -66,7 +66,7 @@ controllers.controller('DrawCtrl', function($scope, common, modal, module, $filt
     };
 
     $scope.startDraw = function() {
-        common.loadAllPage('/draw/obtainDrawItems.cmd', function(data) {
+        common.loadAllPage('/drawItem/obtainDrawItems.cmd', function(data) {
             modal.openWithCtrl('DrawDialogCtrl', {
                 url: 'app/tpl/draw-show.html',
                 width: 600,
