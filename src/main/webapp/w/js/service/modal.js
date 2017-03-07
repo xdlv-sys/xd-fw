@@ -36,6 +36,26 @@ services.service('modal', ['$mdDialog', function($mdDialog) {
             .ok('确定')
         );
     };
+    this.openWithCtrl = function(controller, conf) {
+        var modal = angular.extend({
+            data: {},
+            cancel: function(){$mdDialog.cancel();},
+            answer: function(){$mdDialog.hide(this.data);}
+        },conf);
+
+        $mdDialog.show({
+            controller: controller,
+            controllerAs: 'modal',
+            templateUrl: 'js/tpl/dialog-common.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: false,
+            locals: {
+                dialogConf: {
+                    modal: modal
+                }
+            }
+        });
+    };
     this.open = function(conf, scope) {
         $mdDialog.show({
                 controller: function() {
@@ -63,8 +83,8 @@ services.service('modal', ['$mdDialog', function($mdDialog) {
                     conf.ok(data);
                 }
             }, function() {
-                if (conf.cancel) {
-                    conf.cancel();
+                if (conf.no) {
+                    conf.no();
                 }
             });
     };
