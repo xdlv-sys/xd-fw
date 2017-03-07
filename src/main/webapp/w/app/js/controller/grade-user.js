@@ -32,11 +32,11 @@ controllers.controller('GradeUserCtrl', function ($scope, common, modal, configu
     }, {
         name: '用工性质',
         field: 'contractType',
-        cellTemplate: '<div class="ui-grid-cell-contents" >{{grid.getCellValue(row, col)===0?\'业务代办\':"其它"}}</div>'
+        cellTemplate: '<div class="ui-grid-cell-contents" >{{grid.options.configuration.i18n(1,"contract-type",row.entity.contractType)}}</div>'
     }, {
         name: '在职状态',
         field: 'inService',
-        cellTemplate: '<div class="ui-grid-cell-contents" >{{grid.getCellValue(row, col)===0?\'离职\':"在职"}}</div>'
+        cellTemplate: '<div class="ui-grid-cell-contents" >{{grid.options.configuration.i18n(0,"confirm",row.entity.inService)}}</div>'
     }], $scope, $scope.loadUsers,configuration);
 
     $scope.userGrid.refresh(true);
@@ -47,28 +47,28 @@ controllers.controller('GradeUserCtrl', function ($scope, common, modal, configu
             success: function (data) {
                 var depts = data.data;
                 //replace user dept
-                if (conf.data && conf.data.dept) {
+                if (conf.data && conf.data.user && conf.data.user.dept) {
                     var index = -1;
                     depts.each(function (v, i) {
-                        if (conf.data.dept.id === v.id) {
+                        if (conf.data.user.dept.id === v.id) {
                             index = i;
                         }
                     });
                     if (index > -1) {
-                        depts[index] = conf.data.dept;
+                        depts[index] = conf.data.user.dept;
                     }
                     //TODO simply process
-                    angular.forEach(conf.data.roles, function (r, i) {
-                        angular.each(conf.data.dept.roles, function (r1, j) {
+                    angular.forEach(conf.data.user.roles, function (r, i) {
+                        angular.each(conf.data.user.dept.roles, function (r1, j) {
                             if (r.id === r1.id) {
-                                conf.data.roles[i] = r1;
+                                conf.data.user.roles[i] = r1;
                                 return true;
                             }
                         });
                     });
-                    if (conf.data.roles
-                        && conf.data.dept.roles.length === conf.data.roles.length) {
-                        conf.data.roles = conf.data.dept.roles;
+                    if (conf.data.user.roles
+                        && conf.data.user.dept.roles.length === conf.data.user.roles.length) {
+                        conf.data.user.roles = conf.data.user.dept.roles;
                     }
                 }
                 modal.open(angular.extend({
@@ -76,21 +76,29 @@ controllers.controller('GradeUserCtrl', function ($scope, common, modal, configu
                     width: 500,
                     depts: depts,
                     organizations: configuration.group(1,'organization'),
+                    contractTypes: configuration.group(1,'contract-type'),
+                    confirms: configuration.group(0,'confirm'),
+                    sexs : configuration.group(0,'sex'),
                     canGo: function (data) {
                         data = data || {};
-                        return conf.mod || data.password === data.password2;
+                        return conf.mod || data.user && data.user.password === data.user.password2;
                     },
                     ok: function (user) {
-                        //TODO simply process
-                        //var roles = user.roles.length > 0 ? user.dept.roles : [];
-
-                        angular.forEach(user.roles, function (v, i) {
-                            user['roles[' + i + '].id'] = v.id;
+                        
+                        angular.forEach(user.user.roles, function (v, i) {
+                            user['user.roles[' + i + '].id'] = v.id;
                         });
-                        delete user.roles;
 
-                        user['dept.id'] = user.dept.id;
-                        delete user.dept;
+                        user['user.dept.id'] = user.user.dept.id;
+
+                        user['user.password'] = user.user.password;
+                        user['user.sex'] = user.user.sex;
+
+                        if (!angular.isBlank(user.id)){
+                            user['user.id'] = user.id;
+                        }
+
+                        delete user.user;
 
                         common.post('/gradeUser/saveUser.cmd', user, {
                             success: function () {
@@ -115,7 +123,7 @@ controllers.controller('GradeUserCtrl', function ($scope, common, modal, configu
         angular.forEach(users, function (v) {
             params.userIds.push(v.id);
         });
-        common.delete('/user/deleteUser.cmd', params, {
+        common.delete('/gradeUser/deleteUser.cmd', params, {
             success: function () {
                 $scope.userGrid.refresh();
             }
@@ -126,7 +134,7 @@ controllers.controller('GradeUserCtrl', function ($scope, common, modal, configu
         var user = $scope.userGrid.selection.getSelectedRows()[0];
         $scope.openUserInfo({
             title: '修改用户',
-            data: user,
+            data: angular.copy(user),
             mod: true
         }, $scope);
     };

@@ -18,10 +18,10 @@
 <div layout="row">
     <md-input-container flex>
         <label>所属机构</label>
-        <md-select name="organizaion" ng-model="modal.data.organizaion" required>
-            <md-option ng-repeat="org in modal.organizaitons" ng-value="$index">{{org}}</md-option>
+        <md-select name="organization" ng-model="modal.data.organization" required>
+            <md-option ng-repeat="org in modal.organizations" ng-value="org.index">{{org.value}}</md-option>
         </md-select>
-        <div ng-messages="commonForm.organizaion.$error" role="alert" multiple>
+        <div ng-messages="commonForm.organization.$error" role="alert" multiple>
             <div ng-message="required" class="my-message">所属机构不能为空</div>
         </div>
     </md-input-container>
@@ -32,56 +32,60 @@
 </div>
 <div layout="row">
     <md-input-container flex>
-        <label>手机号码</label>
-        <input name="mobile" ng-model="modal.data.mobile" type="text" required ng-pattern="/^(1\d{10})$/">
-        <div ng-messages="commonForm.mobile.$error" role="alert" multiple>
-            <div ng-message="required" class="my-message">手机号码不能为空</div>
-            <div ng-message="pattern" class="my-message">手机号格式不正确</div>
+        <label>性别</label>
+        <md-select name="sex" ng-model="modal.data.user.sex" required>
+            <md-option ng-repeat="t in modal.sexs" ng-value="t.index">{{t.value}}</md-option>
+        </md-select>
+        <div ng-messages="commonForm.sex.$error" role="alert" multiple>
+            <div ng-message="required" class="my-message">性别不能为空</div>
         </div>
     </md-input-container>
 
     <md-input-container flex>
-        <label>固定电话</label>
-        <input name="phone" ng-model="modal.data.phone" type="text" ng-pattern="/\d{3}-\d{8}|\d{4}-\d{7}/">
-        <div ng-messages="commonForm.phone.$error" role="alert" multiple>
-            <div ng-message="pattern" class="my-message">固定电话格式:025-888888</div>
+        <label>岗位名称</label>
+        <input name="phone" ng-model="modal.data.jobName" type="text">
+    </md-input-container>
+</div>
+<div layout="row">
+    <md-input-container flex>
+        <label>用工性质</label>
+        <md-select name="contractType" ng-model="modal.data.contractType" required>
+            <md-option ng-repeat="t in modal.contractTypes" ng-value="t.index">{{t.value}}</md-option>
+        </md-select>
+
+        <div ng-messages="commonForm.contractType.$error" role="alert" multiple>
+            <div ng-message="required" class="my-message">用工性质不能为空</div>
+        </div>
+    </md-input-container>
+    <md-input-container flex>
+        <label>在职状态</label>
+        <md-select name="inService" ng-model="modal.data.inService" required>
+            <md-option ng-repeat="t in modal.confirms" ng-value="t.index">{{t.value}}</md-option>
+        </md-select>
+        <div ng-messages="commonForm.inService.$error" role="alert" multiple>
+            <div ng-message="required" class="my-message">在职状态不能为空</div>
         </div>
     </md-input-container>
 </div>
 <div layout="row" ng-if="!(modal.data.id)">
     <md-input-container flex>
         <label>密码</label>
-        <input ng-model="modal.data.password" type="password" required>
+        <input ng-model="modal.data.user.password" type="password" required>
     </md-input-container>
     <md-input-container flex>
         <label>再次输入</label>
-        <input ng-model="modal.data.password2" type="password" required>
+        <input ng-model="modal.data.user.password2" type="password" required>
     </md-input-container>
     <p ng-if="!modal.canGo(modal.data)" style="color:red;">
         密码输入不一致
     </p>
 </div>
+
 <div layout="row">
-    <md-input-container flex>
-        <label>身份证号</label>
-        <input name="idCard" ng-model="modal.data.idCard" type="text" ng-pattern="/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/">
-        <div ng-messages="commonForm.idCard.$error" role="alert" multiple>
-            <div ng-message="pattern" class="my-message">请输入正确的身份证号码</div>
-        </div>
-    </md-input-container>
-    <md-input-container flex>
-        <label>邮箱</label>
-        <input name="mail" ng-model="modal.data.mail" type="email">
-        <div ng-messages="commonForm.mail.$error" role="alert" multiple>
-            <div ng-message="email" class="my-message">邮箱地址不正确</div>
-        </div>
-    </md-input-container>
-</div>
-<div layout="row">
-    <md-select flex placeholder="部门" ng-model="modal.data.dept" required>
+    <md-select flex placeholder="部门" ng-model="modal.data.user.dept" required>
         <md-option ng-repeat="dept in modal.depts" ng-value="dept">{{dept.name}}</md-option>
     </md-select>
-    <md-select flex placeholder="角色" ng-model="modal.data.roles" multiple>
-        <md-option ng-repeat="role in modal.data.dept.roles" ng-value="role">{{role.name}}</md-option>
+    <md-select flex placeholder="角色" ng-model="modal.data.user.roles" multiple>
+        <md-option ng-repeat="role in modal.data.user.dept.roles" ng-value="role">{{role.name}}</md-option>
     </md-select required>
 </div>

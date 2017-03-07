@@ -38,7 +38,11 @@ services.service('configuration', ['common', function(common) {
     };
 
     this.i18n = function(groupNo, name, value) {
-        return this.configurations[this.makeKey(groupNo, name)][value].value;
+        if (angular.isBlank(value)){
+            return '';
+        }
+        var v = this.configurations[this.makeKey(groupNo, name)][value];
+        return v ? v.value : '';
     };
     this.group = function(groupNo, name) {
         var ret = [];

@@ -9,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "t_grade_user")
-public class GradeUser {
+public class GradeUser{
     @Id
     private Integer id;
     private Integer organization;
@@ -21,7 +21,7 @@ public class GradeUser {
     private Integer contractType;
     private Integer inService;
 
-    @OneToOne(cascade={CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="id")
     private User user;
 

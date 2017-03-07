@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import xd.app.bean.GradeUser;
 import xd.app.dao.GradeUserRepository;
-import xd.fw.bean.DynamicConf;
 import xd.fw.bean.User;
 import xd.fw.controller.BaseController;
-import xd.fw.dao.ConfRepository;
+import xd.fw.util.FwException;
 
 /**
  * Created by xd on 2016/12/7.
@@ -40,8 +39,20 @@ public class GradeUserController extends BaseController{
 
     @RequestMapping("saveUser")
     @ResponseBody
-    public String saveUser(User user) throws Exception {
-        userRepositoryCustom.saveUser(user);
+    public String saveUser(GradeUser gradeUser) throws Exception {
+        fwService.runSessionCommit(()->{
+            try {
+                User user = gradeUser.getUser();
+                user.setName(gradeUser.getCode());
+
+                user = userRepositoryCustom.saveUser(user);
+                gradeUser.setId(user.getId());
+
+                gradeUserRepository.save(gradeUser);
+            } catch (Exception e) {
+                throw new FwException("can not save user",e);
+            }
+        });
         return DONE;
     }
 }
