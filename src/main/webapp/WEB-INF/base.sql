@@ -3,7 +3,7 @@ drop table IF EXISTS hibernate_sequences;
 create table hibernate_sequences(
   sequence_name VARCHAR(64) not null primary key,
   next_val int not null
-);
+)ENGINE = INNODB;
 
 drop table IF EXISTS t_user;
 create table t_user(
@@ -18,13 +18,13 @@ create table t_user(
   id_card varchar(32),
   mail varchar(20),
   dept int
-);
+)ENGINE = INNODB;
 
 drop table IF EXISTS t_role;
 create table t_role(
   id int not null primary key,
   name VARCHAR(50) UNIQUE
-);
+)ENGINE = INNODB;
 
 drop table IF EXISTS t_mod;
 create table t_mod(
@@ -34,24 +34,24 @@ create table t_mod(
   router_id VARCHAR(50),
   addition VARCHAR(50),
   parent_id int
-);
+)ENGINE = INNODB;
 drop table IF EXISTS t_user_role;
 create table t_user_role(
   user_id int not null,
   role_id int not null
-);
+)ENGINE = INNODB;
 
 drop table IF EXISTS t_role_mod;
 create table t_role_mod(
   role_id int not null,
   mod_id int not null
-);
+)ENGINE = INNODB;
 drop table IF EXISTS t_dept;
 create table t_dept(
   id int not null primary key,
   parent int,
   name varchar(32)
-);
+)ENGINE = INNODB;
 drop table IF EXISTS t_dept_role;
 create table t_dept_role(
   dept_id int not null,
@@ -97,14 +97,3 @@ insert into t_role_mod values(-2,9);
 insert into t_role_mod values(-2,10);
 insert into t_role_mod values(-2,11);
 insert into t_role_mod values(-2,12);
-
-
-
-
-
-
-
-
-
-
-
