@@ -1,0 +1,10 @@
+<div layout="column" flex>
+    <div layout="row" style="margin-bottom:60px;">
+        <md-button class="md-primary md-raised fa fa-backward" ng-click="back()">&nbsp;返回</md-button>
+
+        <md-button class="md-primary md-raised fa fa-save" ng-click="save()" ng-disabled="form.$invalid" aria-label="save">&nbsp;保存</md-button>
+    </div>
+    <form role='form' name='form' novalidate="">
+        <div ng-include="'app/js/tpl/template-item-info.html'" ></div>
+    </form>
+</div>

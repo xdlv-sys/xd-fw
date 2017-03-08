@@ -70,26 +70,34 @@ delete from t_mod where id > 11;
 delete from t_role_mod where mod_id > 11;
 
 insert into t_mod values(12,'系统维护',null,null,'fa fa-user-secret',0);
-insert into t_mod values(13,'人员管理',null,'gradeUser','fa fa-user',12);
+insert into t_mod values(13,'人员管理',null,'grade-user','fa fa-user',12);
 insert into t_role_mod VALUES (-2,12);
 insert into t_role_mod VALUES (-2,13);
 
 insert into t_mod values(14,'模板管理',null,null,'',0);
-insert into t_mod values(15,'下发模板',null,'pushTemplate','fa-cloud-upload',14);
-insert into t_mod values(16,'下载模板',null,'downloadTemplate','fa-cloud-download',14);
+insert into t_mod values(15,'上传模板',null,'main-template-record','fa fa-cloud-upload',14);
+insert into t_mod values(16,'下载模板',null,'download-template','fa fa-cloud-download',14);
 insert into t_role_mod VALUES (-2,14),(-2,15),(-2,16);
 
 drop table IF EXISTS t_main_template;
 create table t_main_template(
   id int not null primary key,
-  belong date,
   dept_id int,
   download_times int,
   file_name varchar(128),
-  upload_time timestamp DEFAULT now(),
-  creator varchar(64)
+  record_id int,
+  upload_time timestamp DEFAULT now()
 )ENGINE = INNODB;
 
+drop table IF EXISTS t_main_template_record;
+create table t_main_template_record(
+  id int not null primary key,
+  belong date,
+  finished int,
+  status int,
+  creator varchar(64),
+  create_time timestamp DEFAULT now()
+)ENGINE = INNODB;
 
 
 

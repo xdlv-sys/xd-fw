@@ -4,7 +4,7 @@ angular.module('xdApp', [
     'ui.router',
     'ngMaterial', 'ngMessages',
     'ngAria',
-    'ui.grid', 'ui.grid.pagination', 'ui.grid.selection', 'ui.grid.autoResize','ui.grid.edit',
+    'ui.grid', 'ui.grid.pagination', 'ui.grid.selection', 'ui.grid.autoResize', 'ui.grid.edit',
     'multiselect-searchtree', 'ngPopover', 'lfNgMdFileInput'
 ]).config(['$mdDateLocaleProvider', function($mdDateLocaleProvider) {
     $mdDateLocaleProvider.months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
@@ -65,16 +65,36 @@ angular.module('xdApp', [
                 }
             ]
         };
+
+        function convertController(n) {
+            var s = '';
+            for (var i = 0; i < n.length; i++) {
+                if (n.charAt(i) === '-') {
+                    s += n.charAt(i + 1).toUpperCase();
+                    i++;
+                } else {
+                    s += n.charAt(i);
+                }
+            }
+            return s.substring(0, 1).toUpperCase() + s.substring(1) + 'Ctrl';
+        }
         $stateProvider.xdParse = function(n, c, b) {
             b = b || 'app';
             $stateProvider.state(n, angular.extend({
-                url: '/'+ b +'/' + n,
+                url: '/' + b + '/' + n,
                 templateUrl: b + '/' + n + '.html',
                 params: { params: null },
                 resolve: r,
                 controller: n.substring(0, 1).toUpperCase() + n.substring(1) + 'Ctrl'
             }, c));
             return $stateProvider;
+        };
+        $stateProvider.xdParse2 = function() {
+            angular.each(arguments, function(n) {
+                $stateProvider.xdParse(n, {
+                    controller: convertController(n)
+                });
+            });
         };
 
         $stateProvider.state('login', {

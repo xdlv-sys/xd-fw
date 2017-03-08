@@ -87,7 +87,13 @@ services.service('common', ['$http', 'modal', '$q', '$timeout', function($http, 
         var formData = new FormData();
         for (var key in params) {
             if (!angular.isBlank(params[key])) {
-                formData.append(key, params[key]);
+                if (angular.isArray(params[key])){
+                    angular.forEach(params[key], function(v){
+                        formData.append(key, v);
+                    });
+                } else {
+                    formData.append(key, params[key]);
+                }
             }
         }
 

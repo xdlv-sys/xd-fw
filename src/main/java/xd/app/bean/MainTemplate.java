@@ -1,8 +1,9 @@
 package xd.app.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * Created by xd on 3/7/2017.
@@ -14,12 +15,22 @@ public class MainTemplate {
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "MainTemplate")
     @TableGenerator(name = "MainTemplate")
     private Integer id;
-    private Date belong;
     private Integer deptId;
     private Integer downloadTimes;
     private String fileName;
     private Timestamp uploadTime;
-    private String creator;
+    @ManyToOne
+    @JoinColumn(name = "record_id")
+    @JsonIgnore
+    MainTemplateRecord record;
+
+    public MainTemplateRecord getRecord() {
+        return record;
+    }
+
+    public void setRecord(MainTemplateRecord record) {
+        this.record = record;
+    }
 
     public Integer getId() {
         return id;
@@ -27,14 +38,6 @@ public class MainTemplate {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Date getBelong() {
-        return belong;
-    }
-
-    public void setBelong(Date belong) {
-        this.belong = belong;
     }
 
     public Integer getDeptId() {
@@ -69,14 +72,6 @@ public class MainTemplate {
         this.uploadTime = uploadTime;
     }
 
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -85,13 +80,11 @@ public class MainTemplate {
         MainTemplate that = (MainTemplate) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (belong != null ? !belong.equals(that.belong) : that.belong != null) return false;
         if (deptId != null ? !deptId.equals(that.deptId) : that.deptId != null) return false;
         if (downloadTimes != null ? !downloadTimes.equals(that.downloadTimes) : that.downloadTimes != null)
             return false;
         if (fileName != null ? !fileName.equals(that.fileName) : that.fileName != null) return false;
         if (uploadTime != null ? !uploadTime.equals(that.uploadTime) : that.uploadTime != null) return false;
-        if (creator != null ? !creator.equals(that.creator) : that.creator != null) return false;
 
         return true;
     }
@@ -99,12 +92,10 @@ public class MainTemplate {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (belong != null ? belong.hashCode() : 0);
         result = 31 * result + (deptId != null ? deptId.hashCode() : 0);
         result = 31 * result + (downloadTimes != null ? downloadTimes.hashCode() : 0);
         result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
         result = 31 * result + (uploadTime != null ? uploadTime.hashCode() : 0);
-        result = 31 * result + (creator != null ? creator.hashCode() : 0);
         return result;
     }
 }

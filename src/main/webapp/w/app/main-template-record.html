@@ -1,0 +1,10 @@
+<md-content flex layout="column">
+    <div layout="row" class="xd_tool_bar">
+        <md-button class="md-primary md-raised" ng-click="addRecord()">新增模板</md-button>
+
+        <md-button class="md-primary md-raised" ng-click="pushRecord()" ng-disabled="grid.selection.getSelectedRows().length < 1">下发模板</md-button>
+
+        <md-button class="md-primary md-raised" ng-click="modRecord()" ng-disabled="grid.selection.getSelectedRows().length!==1">修改模板</md-button>
+    </div>
+    <div flex ui-grid="grid" ui-grid-pagination ui-grid-selection ui-grid-auto-resize></div>
+</md-content>

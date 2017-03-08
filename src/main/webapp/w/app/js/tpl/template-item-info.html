@@ -1,0 +1,18 @@
+<div layout="row" style="margin:0 auto; width: 400px;">
+    <md-input-container>
+        <label>所属年月</label>
+        <md-datepicker ng-model="data.belong" xd-date md-mode="month" md-date-locale="monthFormat" required></md-datepicker>
+    </md-input-container>&nbsp;&nbsp;
+    <!-- <md-button class="fa fa-plus md-primary md-raised" ng-click="addItem()" ng-disabled="!data.belong">&nbsp;&nbsp;增加</md-button> -->
+</div>
+
+<div layout="row" ng-repeat="item in data.templates">
+    <h3 style="margin-right:12px;">{{$index + 1 < 10 ? '0' + ($index + 1) : $index + 1}} &nbsp;{{data.templates[$index].deptName}}</h3>
+
+    <a flex href="#" ng-if="item.fileName" style="margin:auto 0;">{{item.fileName}}</a>
+
+    <lf-ng-md-file-input ng-hide="item.fileName" flex class="upload_file" aria-label="fileupload" lf-files='data.templates[$index].importFile' lf-placeholder="选择Excel文件上传" lf-browse-label="选择文件" lf-remove-label="删除" accept="application/msexcel" lf-totalsize="5MB" progress style="margin-left:20px;margin-right:20px;"> </lf-ng-md-file-input>
+
+    <md-button class="md-primary md-raised" ng-click="item.fileName=undefined" ng-show="item.fileName">替换文件</md-button>
+    
+</div>
