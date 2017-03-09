@@ -1,5 +1,6 @@
 controllers.controller('AddTemplateItemCtrl', function($scope, common, modal, configuration, $state, $stateParams, $filter) {
     $scope.data = $stateParams.params;
+    $scope.addTemplateFlag = !$scope.data;
 
     $scope.data = $scope.data || {};
     $scope.data.templates = $scope.data.templates || [];
@@ -20,15 +21,6 @@ controllers.controller('AddTemplateItemCtrl', function($scope, common, modal, co
             }
         });
     });
-
-    $scope.deptName = function(deptId){
-        angular.each($scope.depts, function(v){
-            if (v.id === deptId){
-                return v.name;
-            }
-        });
-    };
-
 
     $scope.save = function() {
         var parmas = {

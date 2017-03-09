@@ -11,15 +11,10 @@ import xd.app.bean.MainTemplate;
 import xd.app.bean.MainTemplateRecord;
 import xd.app.dao.MainTemplateRecordRepository;
 import xd.app.dao.MainTemplateRepository;
-import xd.fw.controller.BaseController;
 import xd.fw.util.FwException;
 import xd.fw.util.FwUtil;
-import xd.fw.util.I18n;
 
-import javax.annotation.PostConstruct;
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -27,22 +22,12 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("mainTemplateRecord")
-public class MainTemplateRecordController extends BaseController{
+public class MainTemplateRecordController extends TemplateController{
     @Autowired
     MainTemplateRepository mainTemplateRepository;
 
     @Autowired
     MainTemplateRecordRepository mainTemplateRecordRepository;
-
-    File templateDir;
-
-    @PostConstruct
-    public void init() {
-        templateDir = new File(I18n.getWebInfDir(), "template-files/");
-        if (!templateDir.exists() && !templateDir.mkdir()) {
-            throw new FwException("failed to create directory for storage of supplier files ");
-        }
-    }
 
     @RequestMapping("obtain")
     @ResponseBody
@@ -83,9 +68,7 @@ public class MainTemplateRecordController extends BaseController{
                 });
                 mainTemplateRecordRepository.save(record);
             } else {
-                FwUtil.safeEach(mainTemplateRecord.getTemplates(), (t)->{
-                    t.setRecord(mainTemplateRecord);
-                });
+                FwUtil.safeEach(mainTemplateRecord.getTemplates(), (t)-> t.setRecord(mainTemplateRecord));
                 mainTemplateRecordRepository.save(mainTemplateRecord);
             }
         });
@@ -93,13 +76,8 @@ public class MainTemplateRecordController extends BaseController{
     }
 
     private void transfer(MultipartFile file, Date belong, Integer deptId) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
-        File dir = new File (templateDir, String.format("%s/%d",sdf.format(belong),deptId));
-        if (!dir.exists() && !dir.mkdirs()){
-            throw new FwException("can not create dir for template files");
-        }
         try {
-            file.transferTo(new File(dir, file.getOriginalFilename()));
+            file.transferTo(templateFile(belong,deptId, file.getOriginalFilename()));
         } catch (IOException e) {
             throw new FwException("",e);
         }

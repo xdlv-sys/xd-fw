@@ -30,6 +30,19 @@
              };
          }
      };
+ }).filter('pad', function() {
+     return function(s, number, place, direction) {
+        place = place || ' ';
+        s = s + '';
+        for (var i = s.length; i < number;i++){
+            if (direction === 'after'){
+                s += place;
+            } else {
+                s = place + s;
+            }
+        }
+        return s;
+     };
  }).filter('nospace', function() {
      return function(value) {
          return (!value) ? '' : value.replace(/ /g, '');
