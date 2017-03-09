@@ -82,6 +82,7 @@ insert into t_role_mod VALUES (-2,14),(-2,15),(-2,16);
 drop table IF EXISTS t_main_template;
 create table t_main_template(
   id int not null primary key,
+  belong date,
   dept_id int,
   download_times int,
   file_name varchar(128),

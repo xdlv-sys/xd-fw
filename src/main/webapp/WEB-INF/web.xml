@@ -52,6 +52,10 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error.cmd</location>
+    </error-page>
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

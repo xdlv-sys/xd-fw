@@ -1,6 +1,7 @@
 package xd.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -22,14 +23,14 @@ public class MainTemplateController extends TemplateController {
     @Autowired
     MainTemplateRepository mainTemplateRepository;
 
-    @RequestMapping("obtainMainTemplates")
+    @RequestMapping("obtain")
     @ResponseBody
-    public PageContent obtainMainTemplates(int page, int limit) {
-        Page<MainTemplate> list = mainTemplateRepository.findAll(pageRequest(page, limit, new Sort(Sort.Direction.ASC, "id")));
-        return page(list);
+    public PageContent obtainMainTemplates(int page, int limit, MainTemplate query) {
+        return page(mainTemplateRepository.findAll(Example.of(query, queryMatcher())
+                , pageRequest(page, limit)));
     }
 
-    @RequestMapping("deleteMainTemplate")
+    @RequestMapping("delete")
     @ResponseBody
     public String deleteMainTemplate(int[] templateIds) {
         for (int id : templateIds) {
@@ -38,7 +39,7 @@ public class MainTemplateController extends TemplateController {
         return DONE;
     }
 
-    @RequestMapping("saveMainTemplate")
+    @RequestMapping("save")
     @ResponseBody
     public String saveMainTemplate(MainTemplate mainTemplate) throws Exception {
         mainTemplateRepository.save(mainTemplate);
@@ -48,6 +49,8 @@ public class MainTemplateController extends TemplateController {
     @RequestMapping("showFile")
     public ModelAndView showFile(Integer id, HttpServletRequest request, HttpServletResponse response) throws Exception {
         MainTemplate template = mainTemplateRepository.findOne(id);
+        template.setDownloadTimes(template.getDownloadTimes() + 1);
+        mainTemplateRepository.save(template);
         return download(request, response, relativeTemplatePath(template.getRecord().getBelong()
                 , template.getDeptId()), template.getFileName());
     }

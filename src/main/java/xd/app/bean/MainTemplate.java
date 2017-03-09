@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by xd on 3/7/2017.
@@ -18,11 +19,20 @@ public class MainTemplate {
     private Integer deptId;
     private Integer downloadTimes;
     private String fileName;
+    private Date belong;
     private Timestamp uploadTime;
     @ManyToOne
     @JoinColumn(name = "record_id")
     @JsonIgnore
     MainTemplateRecord record;
+
+    public Date getBelong() {
+        return belong;
+    }
+
+    public void setBelong(Date belong) {
+        this.belong = belong;
+    }
 
     public MainTemplateRecord getRecord() {
         return record;

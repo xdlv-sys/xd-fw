@@ -47,6 +47,7 @@ public class MainTemplateRecordController extends TemplateController{
                         , mainTemplate.getDeptId());
                 mainTemplate.setFileName(f.getOriginalFilename());
                 mainTemplate.setDownloadTimes(0);
+                mainTemplate.setBelong(mainTemplateRecord.getBelong());
             });
 
             if (mainTemplateRecord.getId() != null){
@@ -56,7 +57,7 @@ public class MainTemplateRecordController extends TemplateController{
                     FwUtil.safeEach(record.getTemplates(), (tb)->{
                         if (t.getDeptId().equals(tb.getDeptId())){
                             tb.setFileName(t.getFileName());
-                            tb.setDownloadTimes(2);
+                            tb.setDownloadTimes(0);
                             contains[0] = true;
                         }
                     });
