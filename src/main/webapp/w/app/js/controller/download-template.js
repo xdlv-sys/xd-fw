@@ -37,14 +37,14 @@ controllers.controller('DownloadTemplateCtrl', function($scope, common, modal, c
                 cls: 'fa fa-plus icon-button',
                 titleClick: function(data){
                     if (data.templates.length === 5){
-                        modal.alert('不能超过5个模板');
+                        modal.toast('最大附件数为5个');
                         return;
                     }
                     data.templates[data.templates.length] = {};
                 }
             },
-            ok : function(templates){
-
+            ok : function(data){
+                
             }
         });
     };

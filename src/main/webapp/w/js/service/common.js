@@ -17,7 +17,8 @@ services.config(['$httpProvider', function($httpProvider) {
     });*/
 }]);
 
-services.service('common', ['$http', 'modal', '$q', '$timeout', function($http, modal, $q, $timeout) {
+services.service('common', function($http, modal, $q, $timeout) {
+    
     this.async = function(f) {
         var p = $timeout(function() {
             f();
@@ -147,7 +148,7 @@ services.service('common', ['$http', 'modal', '$q', '$timeout', function($http, 
             }
         };
     }
-}]);
+});
 if (!angular.isFunction) {
     angular.isFunction = function(object) {
         return object && getClass.call(object) == '[object Function]';

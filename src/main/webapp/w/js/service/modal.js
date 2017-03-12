@@ -1,4 +1,4 @@
-services.service('modal', ['$mdDialog', function($mdDialog) {
+services.service('modal', function($mdDialog, $mdToast) {
     this.confirm = function(msg, conf) {
         var confirm = $mdDialog.confirm()
             .title('提示信息')
@@ -88,4 +88,14 @@ services.service('modal', ['$mdDialog', function($mdDialog) {
                 }
             });
     };
-}]);
+    this.toast = function(msg, position, delay){
+        position = position || 'bottom left right';
+        delay = delay || 2000;
+        $mdToast.show($mdToast.simple(
+            ).textContent(msg
+            ).position(
+            position).hideDelay(delay));
+    };
+    
+
+});
