@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import xd.fw.bean.User;
 import xd.fw.dao.UserRepositoryCustom;
 import xd.fw.service.FwService;
+import xd.fw.service.IConst;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ import java.util.List;
 /**
  * Created by xd on 2016/11/30.
  */
-public abstract class BaseController {
+public abstract class BaseController implements IConst{
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 

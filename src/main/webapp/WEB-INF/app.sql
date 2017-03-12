@@ -2,7 +2,6 @@ delete from t_dynamic_conf where id > 0;
 insert into t_dynamic_conf values(1,'1','organization.1','省公司','所属机构');
 insert into t_dynamic_conf values(2,'1','organization.2','部门(地市)','所属机构');
 insert into t_dynamic_conf values(3,'1','organization.3','班组','所属机构');
-
 insert into t_dynamic_conf values(4,'1','contract-type.1','业务代办','用工性质');
 
 delete from t_dept where id >= 0;

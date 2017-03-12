@@ -4,7 +4,8 @@ controllers.controller('DownloadTemplateCtrl', function($scope, common, modal, c
         common.loadPage('/mainTemplate/obtain.cmd', {
             page: page,
             limit: limit,
-            deptId: $scope.user.dept.id
+            deptId: $scope.user.dept.id,
+            'record.status': 1
         }, function(data) {
             $scope.grid.data = data.data;
             $scope.grid.totalItems = data.total;
@@ -23,4 +24,28 @@ controllers.controller('DownloadTemplateCtrl', function($scope, common, modal, c
     }], $scope, $scope.loadRecord, configuration);
 
     $scope.grid.refresh(true);
+
+    $scope.upload = function(){
+        modal.open({
+            title: '上传绩效合同模板',
+            url : 'app/js/tpl/w-template-info.html',
+            width: 600,
+            data: {
+                templates: [{}]
+            },
+            toolbar: {
+                cls: 'fa fa-plus icon-button',
+                titleClick: function(data){
+                    if (data.templates.length === 5){
+                        modal.alert('不能超过5个模板');
+                        return;
+                    }
+                    data.templates[data.templates.length] = {};
+                }
+            },
+            ok : function(templates){
+
+            }
+        });
+    };
 });

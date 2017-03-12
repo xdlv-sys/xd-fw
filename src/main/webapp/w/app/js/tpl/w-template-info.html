@@ -1,0 +1,8 @@
+<div layout="column" ng-repeat="item in modal.data.templates">
+    <div layout="row">
+        <h3 style="margin-right:12px;">{{$index + 1}}</h3>
+        <lf-ng-md-file-input flex class="upload_file" aria-label="fileupload" lf-files='item.importFile' lf-placeholder="选择Excel文件上传" lf-browse-label="选择文件" lf-remove-label="删除" accept="application/msexcel" lf-totalsize="5MB" progress> </lf-ng-md-file-input>
+        <md-button class="md-primary fa fa-minus icon-button" ng-click="modal.data.templates.splice($index,1)"></md-button>
+    </div>
+    <md-divider></md-divider>
+</div>

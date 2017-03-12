@@ -15,6 +15,7 @@ import xd.fw.util.FwException;
 import xd.fw.util.FwUtil;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -34,6 +35,19 @@ public class MainTemplateRecordController extends TemplateController{
     public PageContent obtainMainTemplateRecords(int page, int limit){
         Page<MainTemplateRecord> list = mainTemplateRecordRepository.findAll(pageRequest(page, limit,new Sort(Sort.Direction.ASC, "id")));
         return page(list);
+    }
+    @RequestMapping("push")
+    @ResponseBody
+    public String pushMainTemplateRecords(int[] recordIds){
+        fwService.runSessionCommit(()->{
+            Arrays.stream(recordIds).forEach(id->{
+                MainTemplateRecord one = mainTemplateRecordRepository.getOne(id);
+                one.setStatus((int)STATUS_DONE);
+                mainTemplateRecordRepository.save(one);
+            });
+        });
+
+        return DONE;
     }
 
     @RequestMapping("save")

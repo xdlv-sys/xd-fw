@@ -22,7 +22,7 @@ controllers.controller('MainTemplateRecordCtrl', function($scope, common, modal,
     }, {
         name: '状态',
         field: 'status',
-        cellTemplate: '<div class="ui-grid-cell-contents" >{{row.entity.templates.status === 1 ? "己下发": "未下发"}}</div>'
+        cellTemplate: '<div class="ui-grid-cell-contents" >{{row.entity.status === 1 ? "己下发": "未下发"}}</div>'
     }], $scope, $scope.loadRecord, configuration);
 
     $scope.grid.refresh(true);
@@ -33,5 +33,18 @@ controllers.controller('MainTemplateRecordCtrl', function($scope, common, modal,
 
     $scope.modRecord = function() {
         $state.go('add-template-item', { params: $scope.firstSelectedRow() });
+    };
+
+    $scope.disabledPush = function(){
+        var rows = $scope.allSelectedRow();
+        return rows.length < 1 || angular.each(rows, function(v){
+            return v.templates.length < 17 || v.status === 1;
+        });
+    };
+    $scope.pushRecord = function(){
+        common.post('/mainTemplateRecord/push.cmd'
+            ,$scope.constructSelectedId($scope.grid,'recordIds'), function(){
+                $scope.grid.refresh();
+            });
     };
 });
