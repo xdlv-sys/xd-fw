@@ -1,15 +1,18 @@
 <md-tabs flex layout-fill>
-    <md-tab label="下载模板">
-        <md-tab-content layout-fill layout="column">
+    <md-tab label="下载模板" ng-if="allow(17)">
+        <md-tab-content layout-fill layout="column" ng-controller="DownloadTemplateCtrl">
             <div flex ui-grid="grid" ui-grid-pagination ui-grid-selection ui-grid-auto-resize></div>
         </md-tab-content>
     </md-tab>
     <md-tab label="上传模板">
-        <md-tab-content layout-fill layout="column">
+        <md-tab-content layout-fill layout="column" ng-controller="UploadTemplate2Ctrl">
             <div layout="row" class="xd_tool_bar">
-                <md-button class="md-primary md-raised" ng-click="upload()">上传模板</md-button>
+                <md-button class="md-primary md-raised" ng-click="upload()" ng-if="allow(17)">上传模板</md-button>
+                <md-button class="md-primary md-raised" ng-click="delete()" ng-if="allow(18)">删除模板</md-button>
+                <md-button class="md-primary md-raised" ng-click="approve()" ng-if="allow(19)" ng-disabled="canApprove()">审批通过</md-button>
+                <md-button class="md-primary md-raised" ng-click="reject()" ng-if="allow(20)">审批拒绝</md-button>
             </div>
-            <div flex ui-grid="uploadGrid" ui-grid-pagination ui-grid-selection ui-grid-auto-resize></div>
+            <div flex ui-grid="grid" ui-grid-pagination ui-grid-selection ui-grid-auto-resize></div>
         </md-tab-content>
     </md-tab>
 </md-tabs>

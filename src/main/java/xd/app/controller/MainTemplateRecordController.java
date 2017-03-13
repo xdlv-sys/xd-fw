@@ -1,6 +1,7 @@
 package xd.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("mainTemplateRecord")
-public class MainTemplateRecordController extends TemplateController{
+public class MainTemplateRecordController extends TemplateController {
     @Autowired
     MainTemplateRepository mainTemplateRepository;
 
@@ -32,20 +33,28 @@ public class MainTemplateRecordController extends TemplateController{
 
     @RequestMapping("obtain")
     @ResponseBody
-    public PageContent obtainMainTemplateRecords(int page, int limit){
-        Page<MainTemplateRecord> list = mainTemplateRecordRepository.findAll(pageRequest(page, limit,new Sort(Sort.Direction.ASC, "id")));
+    public PageContent obtainMainTemplateRecords(int page, int limit, MainTemplateRecord query) {
+        Page<MainTemplateRecord> list = mainTemplateRecordRepository.findAll(
+                Example.of(query, queryMatcher()),
+                pageRequest(page, limit, new Sort(Sort.Direction.ASC, "id")));
         return page(list);
     }
+
+    @RequestMapping("delete")
+    @ResponseBody
+    public String deleteMainTemplateRecords(int[] recordIds) {
+        fwService.runSessionCommit(()-> Arrays.stream(recordIds).forEach(id-> mainTemplateRecordRepository.delete(id)));
+        return DONE;
+    }
+
     @RequestMapping("push")
     @ResponseBody
-    public String pushMainTemplateRecords(int[] recordIds){
-        fwService.runSessionCommit(()->{
-            Arrays.stream(recordIds).forEach(id->{
-                MainTemplateRecord one = mainTemplateRecordRepository.getOne(id);
-                one.setStatus((int)STATUS_DONE);
-                mainTemplateRecordRepository.save(one);
-            });
-        });
+    public String pushMainTemplateRecords(int[] recordIds, Byte status) {
+        fwService.runSessionCommit(() -> Arrays.stream(recordIds).forEach(id -> {
+            MainTemplateRecord one = mainTemplateRecordRepository.getOne(id);
+            one.setStatus(status);
+            mainTemplateRecordRepository.save(one);
+        }));
 
         return DONE;
     }
@@ -54,28 +63,28 @@ public class MainTemplateRecordController extends TemplateController{
     @ResponseBody
     public String saveMainTemplateRecord(MultipartFile[] files
             , MainTemplateRecord mainTemplateRecord) throws Exception {
-        fwService.runSessionCommit(()->{
-            FwUtil.safeEach(files, (f,i)->{
+        fwService.runSessionCommit(() -> {
+            FwUtil.safeEach(files, (f, i) -> {
                 MainTemplate mainTemplate = mainTemplateRecord.getTemplates().get(i);
                 transfer(f, mainTemplateRecord.getBelong()
-                        , mainTemplate.getDeptId());
+                        , mainTemplate.getDeptId(),mainTemplateRecord.getGenre());
                 mainTemplate.setFileName(f.getOriginalFilename());
                 mainTemplate.setDownloadTimes(0);
                 mainTemplate.setBelong(mainTemplateRecord.getBelong());
             });
 
-            if (mainTemplateRecord.getId() != null){
+            if (mainTemplateRecord.getId() != null) {
                 boolean[] contains = {false};
                 MainTemplateRecord record = mainTemplateRecordRepository.findOne(mainTemplateRecord.getId());
-                FwUtil.safeEach(mainTemplateRecord.getTemplates(),(t)->{
-                    FwUtil.safeEach(record.getTemplates(), (tb)->{
-                        if (t.getDeptId().equals(tb.getDeptId())){
+                FwUtil.safeEach(mainTemplateRecord.getTemplates(), (t) -> {
+                    FwUtil.safeEach(record.getTemplates(), (tb) -> {
+                        if (t.getDeptId().equals(tb.getDeptId())) {
                             tb.setFileName(t.getFileName());
                             tb.setDownloadTimes(0);
                             contains[0] = true;
                         }
                     });
-                    if (!contains[0]){
+                    if (!contains[0]) {
                         record.getTemplates().add(t);
                         t.setRecord(record);
                     }
@@ -83,18 +92,18 @@ public class MainTemplateRecordController extends TemplateController{
                 });
                 mainTemplateRecordRepository.save(record);
             } else {
-                FwUtil.safeEach(mainTemplateRecord.getTemplates(), (t)-> t.setRecord(mainTemplateRecord));
+                FwUtil.safeEach(mainTemplateRecord.getTemplates(), (t) -> t.setRecord(mainTemplateRecord));
                 mainTemplateRecordRepository.save(mainTemplateRecord);
             }
         });
         return DONE;
     }
 
-    private void transfer(MultipartFile file, Date belong, Integer deptId) {
+    private void transfer(MultipartFile file, Date belong, Integer deptId, Byte genre) {
         try {
-            file.transferTo(templateFile(belong,deptId, file.getOriginalFilename()));
+            file.transferTo(templateFile(belong, deptId, genre, file.getOriginalFilename()));
         } catch (IOException e) {
-            throw new FwException("",e);
+            throw new FwException("", e);
         }
     }
 }

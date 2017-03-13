@@ -52,6 +52,6 @@ public class MainTemplateController extends TemplateController {
         template.setDownloadTimes(template.getDownloadTimes() + 1);
         mainTemplateRepository.save(template);
         return download(request, response, relativeTemplatePath(template.getRecord().getBelong()
-                , template.getDeptId()), template.getFileName());
+                , template.getDeptId(), template.getRecord().getGenre()), template.getFileName());
     }
 }

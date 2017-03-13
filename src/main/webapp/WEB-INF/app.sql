@@ -31,6 +31,7 @@ insert into t_role values(3, '文书');
 insert into t_role values(4, '地市（部门）经理');
 insert into t_role values(5, '班组长');
 
+delete from t_dept_role where role_id > -1;
 insert into t_dept_role VALUES (0,1),(0,2);
 insert into t_dept_role VALUES (1,3),(1,4),(1,5);
 insert into t_dept_role VALUES (2,3),(2,4),(2,5);
@@ -74,9 +75,16 @@ insert into t_role_mod VALUES (-2,12);
 insert into t_role_mod VALUES (-2,13);
 
 insert into t_mod values(14,'模板管理',null,null,'',0);
-insert into t_mod values(15,'上传模板',null,'main-template-record','fa fa-cloud-upload',14);
-insert into t_mod values(16,'下载模板',null,'download-template','fa fa-cloud-download',14);
-insert into t_role_mod VALUES (-2,14),(-2,15),(-2,16);
+insert into t_mod values(15,'下发模板',null,'upload-template','fa fa-cloud-upload',14);
+insert into t_mod values(16,'模板审批',null,'download-template','fa fa-cloud-download',14);
+insert into t_mod values(17,'上传模板','/mainTemplateRecord/s',null,null,16);
+insert into t_mod values(18,'删除模板','/mainTemplateRecord/d',null,null,16);
+insert into t_mod values(19,'审批通过','/mainTemplateRecord/p',null,null,16);
+insert into t_mod values(20,'审批拒绝','/mainTemplateRecord/p',null,null,16);
+
+insert into t_role_mod VALUES (1,14),(1,15);
+insert into t_role_mod VALUES (3,14),(3,16),(3,17),(3,18);
+insert into t_role_mod VALUES (4,14),(4,16),(4,19),(4,20);
 
 drop table IF EXISTS t_main_template;
 create table t_main_template(
@@ -93,8 +101,10 @@ drop table IF EXISTS t_main_template_record;
 create table t_main_template_record(
   id int not null primary key,
   belong date,
-  finished int,
-  status int,
+  status TINYINT,
+  genre int,
+  dept_id int,
+  comments varchar(256),
   creator varchar(64),
   create_time timestamp DEFAULT now()
 )ENGINE = INNODB;

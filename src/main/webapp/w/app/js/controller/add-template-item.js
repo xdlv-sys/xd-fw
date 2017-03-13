@@ -21,31 +21,4 @@ controllers.controller('AddTemplateItemCtrl', function($scope, common, modal, co
             }
         });
     });
-
-    $scope.save = function() {
-        var parmas = {
-            files: [],
-            creator: $scope.user.name,
-            belong: $scope.data.belong,
-            status: 0,
-            id : $scope.data.id
-        };
-        var i = 0;
-        $scope.data.templates.each(function(d) {
-            if (!angular.isBlank(d.importFile)) {
-                parmas.files.push(d.importFile[0].lfFile);
-                parmas['templates[' + i++ + '].deptId'] = d.deptId;
-            }
-        });
-
-        common.uploadFile('/mainTemplateRecord/save.cmd', parmas, {
-            success: function(result) {
-                modal.alert('操作成功');
-            },
-            fail: function(result) {
-                modal.alert('操作失败，请联系管理员');
-            }
-        });
-    };
-
 });

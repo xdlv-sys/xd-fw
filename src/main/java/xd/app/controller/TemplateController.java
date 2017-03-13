@@ -16,17 +16,19 @@ import java.util.Date;
 @Controller
 public abstract class TemplateController extends BaseController {
 
-    protected File templateFile(Date belong, Integer deptId, String fileName){
+    protected Byte STATUS_PUSH = 1, STATUS_APPROVED_BY_HR = 2;
 
-        File dir = new File (I18n.getWebInfDir(), relativeTemplatePath(belong, deptId));
+    protected File templateFile(Date belong, Integer deptId, Byte genre, String fileName){
+
+        File dir = new File (I18n.getWebInfDir(), relativeTemplatePath(belong, deptId, genre));
         if (!dir.exists() && !dir.mkdirs()){
             throw new FwException("can not create dir for template files");
         }
         return new File(dir, fileName);
     }
-    protected String relativeTemplatePath(Date belong, Integer deptId){
+    protected String relativeTemplatePath(Date belong, Integer deptId, Byte genre){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
-        return String.format("template-files/%s/%d/", sdf.format(belong), deptId);
+        return String.format("template-files/%s/%d/%d/", sdf.format(belong), deptId, genre);
     }
 
 }
