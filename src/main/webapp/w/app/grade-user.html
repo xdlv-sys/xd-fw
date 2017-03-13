@@ -2,7 +2,7 @@
     <md-tab label="用户">
         <md-tab-content layout-fill layout="column">
             <div layout="row" class="xd_tool_bar">
-                <md-button class="md-primary md-raised" ng-click="addUser()" ng-if="allow(4)">新增用户</md-button>
+                <md-button class="md-primary md-raised" ng-click="addUser()">新增用户</md-button>
                 <md-button class="md-primary md-raised" ng-click="modUser()" ng-disabled="userGrid.selection.getSelectedRows().length!==1">修改用户</md-button>
                 <md-button class="md-primary md-raised" ng-click="delUser()" ng-disabled="userGrid.selection.getSelectedRows().length<1">删除用户</md-button>
             </div>

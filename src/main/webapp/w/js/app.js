@@ -38,10 +38,10 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
         });
 
         $rootScope.firstSelectedRow = function(){
-            return this.grid.selection.getSelectedRows()[0];
+            return this.grid.selection ? this.grid.selection.getSelectedRows()[0] : null;
         };
         $rootScope.allSelectedRow = function(){
-            return this.grid.selection.getSelectedRows();
+            return this.grid.selection ? this.grid.selection.getSelectedRows() : [];
         };
 
         $rootScope.back = function() {

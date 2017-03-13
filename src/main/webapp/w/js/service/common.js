@@ -18,7 +18,7 @@ services.config(['$httpProvider', function($httpProvider) {
 }]);
 
 services.service('common', function($http, modal, $q, $timeout) {
-    
+
     this.async = function(f) {
         var p = $timeout(function() {
             f();
@@ -47,11 +47,11 @@ services.service('common', function($http, modal, $q, $timeout) {
         }
         return this.post(url, params, call);
     };
-    this.delete = function(url, params, call){
+    this.delete = function(url, params, call) {
         var me = this;
         modal.confirm('确认要删除吗？', {
-            postive: function(){
-                me.post(url,params, call);
+            postive: function() {
+                me.post(url, params, call);
             }
         });
     };
@@ -88,8 +88,8 @@ services.service('common', function($http, modal, $q, $timeout) {
         var formData = new FormData();
         for (var key in params) {
             if (!angular.isBlank(params[key])) {
-                if (angular.isArray(params[key])){
-                    angular.forEach(params[key], function(v){
+                if (angular.isArray(params[key])) {
+                    angular.forEach(params[key], function(v) {
                         formData.append(key, v);
                     });
                 } else {
@@ -121,6 +121,14 @@ services.service('common', function($http, modal, $q, $timeout) {
             }
             modal.hide();
         });
+    };
+
+    this.promise = function(success) {
+        var deferred = $q.defer();
+        deferred.promise.then(function(data) {
+            success(data);
+        });
+        return deferred;
     };
 
     this.createGridOption = function(columnDefs, scope, loadData, configuration) {

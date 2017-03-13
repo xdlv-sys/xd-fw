@@ -1,11 +1,13 @@
 package xd.app.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import xd.app.bean.MainTemplate;
@@ -49,10 +51,14 @@ public class MainTemplateRecordController extends TemplateController {
 
     @RequestMapping("push")
     @ResponseBody
-    public String pushMainTemplateRecords(int[] recordIds, Byte status) {
+    public String pushMainTemplateRecords(int[] recordIds, Byte status
+            , @RequestParam(required = false) String comments) {
         fwService.runSessionCommit(() -> Arrays.stream(recordIds).forEach(id -> {
             MainTemplateRecord one = mainTemplateRecordRepository.getOne(id);
             one.setStatus(status);
+            if (comments != null){
+                one.setComments(comments);
+            }
             mainTemplateRecordRepository.save(one);
         }));
 

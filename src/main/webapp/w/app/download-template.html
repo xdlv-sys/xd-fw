@@ -4,13 +4,13 @@
             <div flex ui-grid="grid" ui-grid-pagination ui-grid-selection ui-grid-auto-resize></div>
         </md-tab-content>
     </md-tab>
-    <md-tab label="上传模板">
+    <md-tab label="审批模板">
         <md-tab-content layout-fill layout="column" ng-controller="UploadTemplate2Ctrl">
             <div layout="row" class="xd_tool_bar">
                 <md-button class="md-primary md-raised" ng-click="upload()" ng-if="allow(17)">上传模板</md-button>
-                <md-button class="md-primary md-raised" ng-click="delete()" ng-if="allow(18)">删除模板</md-button>
-                <md-button class="md-primary md-raised" ng-click="approve()" ng-if="allow(19)" ng-disabled="canApprove()">审批通过</md-button>
-                <md-button class="md-primary md-raised" ng-click="reject()" ng-if="allow(20)">审批拒绝</md-button>
+                <md-button class="md-primary md-raised" ng-click="delete()" ng-if="allow(18)" ng-disabled="canApprove(1) || canApprove(2)">删除模板</md-button>
+                <md-button class="md-primary md-raised" ng-click="approve(1)" ng-if="allow(19)" ng-disabled="canApprove(1)">审批通过</md-button>
+                <md-button class="md-primary md-raised" ng-click="approve(2)" ng-if="allow(20)" ng-disabled="canApprove(0) || canApprove(2)">审批拒绝</md-button>
             </div>
             <div flex ui-grid="grid" ui-grid-pagination ui-grid-selection ui-grid-auto-resize></div>
         </md-tab-content>

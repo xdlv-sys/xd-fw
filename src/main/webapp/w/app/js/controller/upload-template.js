@@ -6,7 +6,9 @@ controllers.controller('UploadTemplateCtrl', function($scope, common, modal, con
 
     $scope.grid = common.createGridOption([{
         name: '所属年月',
-        field: 'belong'
+        field: 'belong',
+        cellTemplate: '<div class="ui-grid-cell-contents">{{grid.appScope.onlyYearAndMonth(row.entity.belong)}}</div>'
+  
     }, {
         name: '完成',
         cellTemplate: '<div class="ui-grid-cell-contents" >{{row.entity.templates.length + "/17"}}</div>'
