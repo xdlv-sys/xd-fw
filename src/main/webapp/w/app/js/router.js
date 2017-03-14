@@ -12,7 +12,8 @@ angular.module('xdApp').config(function($stateProvider) {
     $stateProvider.xdParse('download-template', {
         controller: 'TemplateCtrl'
     });
+    $stateProvider.xdParse('approve', {
+        controller: 'TemplateCtrl'
+    });
     
-
-
 });

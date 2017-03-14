@@ -1,0 +1,14 @@
+<md-content flex layout="column" ng-controller="ApproveCtrl">
+    <div layout="row" class="xd_tool_bar">
+        <div ng-if="allow(23)">
+            <md-button class="md-primary md-raised" ng-click="add()">上传绩效</md-button>
+            <md-button class="md-primary md-raised" ng-click="mod()" ng-disabled="disabledPush()">修改绩效</md-button>
+            <md-button class="md-primary md-raised" ng-click="del()" ng-disabled="disabledPush()">删除绩效</md-button>
+        </div>
+        <div ng-if="allow(24) || allow(25) || allow(26)">
+            <md-button class="md-primary md-raised" ng-click="approve()" ng-disabled="grid.selection.getSelectedRows().length!==1">审批通过</md-button>
+            <md-button class="md-primary md-raised" ng-click="reject()" ng-disabled="grid.selection.getSelectedRows().length!==1">审批拒绝</md-button>
+        </div>
+    </div>
+    <div flex ui-grid="grid" ui-grid-pagination ui-grid-selection ui-grid-auto-resize></div>
+</md-content>

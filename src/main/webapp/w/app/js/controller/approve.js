@@ -1,12 +1,13 @@
-controllers.controller('UploadTemplate2Ctrl', function($scope, common, modal, configuration, $filter, gradeConf) {
+controllers.controller('ApproveCtrl', function($scope, common, modal, configuration, $filter, gradeConf) {
 
     $scope.loadTemplates = function(page, limit) {
-        $scope.loadRecord(page, limit, 2, $scope.grid, $scope.user.dept.id);
+        $scope.loadRecord(page, limit, 3, $scope.grid
+            , null,$scope.user.id);
     }
     $scope.fileList = function(v) {
         var html = '';
-        angular.each(v.templates, function(t, i) {
-            html += '<a href="../mainTemplate/showFile.cmd?id=' + t.id + '" alt="' + t.fileName + '">文件' + ++i + '</a>&nbsp;&nbsp;';
+        angular.each(v.templates, function(t) {
+            html += '<a href="../mainTemplate/showFile.cmd?id=' + t.id + '" alt="' + t.fileName + '">' + t.fileName + '</a>&nbsp;&nbsp;';
         });
         return html;
     };
@@ -33,10 +34,12 @@ controllers.controller('UploadTemplate2Ctrl', function($scope, common, modal, co
         cellTemplate: '<div class="ui-grid-cell-contents" >{{grid.options.configuration.status(row.entity)}}</div>'
     }], $scope, $scope.loadTemplates, gradeConf);
 
-    $scope.upload = function(conf) {
+    $scope.grid.refresh(true);
+
+    $scope.add = function(conf){
         modal.open({
-            title: '上传绩效合同模板',
-            url: 'app/js/tpl/w-template-info.html',
+            title: '上传绩效',
+            url: 'app/js/tpl/z-template-info.html',
             width: 600,
             data: angular.extend({
                 templates: [{}]
@@ -61,44 +64,5 @@ controllers.controller('UploadTemplate2Ctrl', function($scope, common, modal, co
         });
     };
 
-    $scope.mod = function(){
-        $scope.upload($scope.firstSelectedRow());
-    };
-    $scope.grid.refresh(true);
 
-    $scope.delete = function() {
-        common.delete('/mainTemplateRecord/delete.cmd', $scope.constructSelectedId($scope.grid, 'recordIds'), function() {
-            $scope.grid.refresh();
-        });
-    };
-    $scope.approve = function(status) {
-        var params = $scope.constructSelectedId($scope.grid, 'recordIds');
-        params.status = status;
-        params.comments = '通过';
-
-        var deferred = common.promise(function() {
-            common.post('/mainTemplateRecord/push.cmd', params, function() {
-                $scope.grid.refresh();
-            });
-        });
-
-        if (status === 2) {
-            modal.prompt({
-                content: '请输入拒绝理由:',
-                ok: function(result) {
-                    params.comments = result;
-                    deferred.resolve();
-                }
-            });
-        } else {
-            deferred.resolve();
-        }
-    };
-
-    $scope.canApprove = function(status) {
-        var rows = $scope.allSelectedRow();
-        return rows.length < 1 || angular.each(rows, function(v) {
-            return v.status === status;
-        });
-    };
 });

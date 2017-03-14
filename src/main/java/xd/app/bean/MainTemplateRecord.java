@@ -19,9 +19,20 @@ public class MainTemplateRecord {
     private Byte genre;
     private Byte status;
     private Integer deptId;
-    private String creator;
     private String comments;
     private Timestamp createTime;
+
+    @ManyToOne
+    @JoinColumn(name = "creator_id")
+    private GradeUser user;
+
+    public GradeUser getUser() {
+        return user;
+    }
+
+    public void setUser(GradeUser user) {
+        this.user = user;
+    }
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "record")
     List<MainTemplate> templates;
@@ -66,14 +77,6 @@ public class MainTemplateRecord {
         this.belong = belong;
     }
 
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
     public Timestamp getCreateTime() {
         return createTime;
     }
@@ -109,7 +112,6 @@ public class MainTemplateRecord {
         if (belong != null ? !belong.equals(that.belong) : that.belong != null) return false;
         if (genre != null ? !genre.equals(that.genre) : that.genre != null) return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
-        if (creator != null ? !creator.equals(that.creator) : that.creator != null) return false;
         if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
         return templates != null ? templates.equals(that.templates) : that.templates == null;
 
@@ -121,7 +123,6 @@ public class MainTemplateRecord {
         result = 31 * result + (belong != null ? belong.hashCode() : 0);
         result = 31 * result + (genre != null ? genre.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (creator != null ? creator.hashCode() : 0);
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         result = 31 * result + (templates != null ? templates.hashCode() : 0);
         return result;

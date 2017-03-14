@@ -38,7 +38,7 @@ public class MainTemplateRecordController extends TemplateController {
     public PageContent obtainMainTemplateRecords(int page, int limit, MainTemplateRecord query) {
         Page<MainTemplateRecord> list = mainTemplateRecordRepository.findAll(
                 Example.of(query, queryMatcher()),
-                pageRequest(page, limit, new Sort(Sort.Direction.ASC, "id")));
+                pageRequest(page, limit, new Sort(Sort.Direction.DESC, "id")));
         return page(list);
     }
 
@@ -96,6 +96,8 @@ public class MainTemplateRecordController extends TemplateController {
                     }
                     contains[0] = false;
                 });
+                record.setStatus(mainTemplateRecord.getStatus());
+                record.setComments(mainTemplateRecord.getComments());
                 mainTemplateRecordRepository.save(record);
             } else {
                 FwUtil.safeEach(mainTemplateRecord.getTemplates(), (t) -> t.setRecord(mainTemplateRecord));

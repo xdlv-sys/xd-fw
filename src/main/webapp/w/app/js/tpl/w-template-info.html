@@ -8,8 +8,10 @@
 <div layout="column" ng-repeat="item in modal.data.templates">
     <div layout="row">
         <h3 style="margin-right:12px;">{{$index + 1}}</h3>
-        <lf-ng-md-file-input flex class="upload_file" aria-label="fileupload" lf-files='item.importFile' lf-placeholder="选择Excel文件上传" lf-browse-label="选择文件" lf-remove-label="删除" accept="application/msexcel" lf-totalsize="5MB" progress> </lf-ng-md-file-input>
-        <md-button class="md-primary fa fa-minus icon-button" ng-click="modal.data.templates.splice($index,1)"></md-button>
+        <a flex href="../mainTemplate/showFile.cmd?id={{item.id}}" ng-if="item.fileName" style="margin:auto 0;">{{item.fileName}}</a>
+        <lf-ng-md-file-input ng-hide="item.fileName" flex class="upload_file" aria-label="fileupload" lf-files='item.importFile' lf-placeholder="选择Excel文件上传" lf-browse-label="选择文件" lf-remove-label="删除" accept="application/msexcel" lf-totalsize="5MB" progress> </lf-ng-md-file-input>
+        <md-button ng-hide="item.fileName" class="md-primary fa fa-minus icon-button" ng-click="modal.data.templates.splice($index,1)"></md-button>
+        <md-button class="fa fa-remove" ng-click="item.fileName=undefined" ng-show="item.fileName"></md-button>
     </div>
     <md-divider></md-divider>
 </div>

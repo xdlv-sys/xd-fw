@@ -11,12 +11,13 @@ controllers.controller('TemplateCtrl', function($scope, common, modal, configura
         });
     };
 
-    $scope.loadRecord = function(page, limit, genre, grid,deptId) {
+    $scope.loadRecord = function(page, limit, genre, grid,deptId,userId) {
         common.loadPage('/mainTemplateRecord/obtain.cmd', {
             page: page,
             limit: limit,
             genre: genre,
-            deptId: deptId
+            deptId: deptId,
+            'user.id' : userId
         }, function(data) {
             grid.data = data.data;
             grid.totalItems = data.total;

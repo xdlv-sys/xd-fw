@@ -105,11 +105,38 @@ create table t_main_template_record(
   genre int,
   dept_id int,
   comments varchar(256),
-  creator varchar(64),
+  creator_id int,
   create_time timestamp DEFAULT now()
 )ENGINE = INNODB;
 
+insert into t_mod values(21,'绩效审批',null,null,'',0);
+insert into t_mod values(22,'绩效合同书',null,'approve','fa fa-file-excel-o',21);
+insert into t_mod values(23,'班组长','/approve/bz',null,null,22);
+insert into t_mod values(24,'部门经理','/approve/bm',null,null,22);
+insert into t_mod values(25,'人力资源主管','/approve/rl',null,null,22);
+insert into t_mod values(26,'人力资源经理','/approve/jl',null,null,22);
 
+insert into t_role_mod VALUES (5,21),(5,22),(5,23);
+insert into t_role_mod VALUES (4,21),(4,22),(4,24);
+insert into t_role_mod VALUES (1,21),(1,22),(1,25);
+insert into t_role_mod VALUES (2,21),(2,22),(2,26);
 
+drop table IF EXISTS t_grade;
+create table t_grade(
+  id int not null primary key,
+  belong date,
+  file_name varchar(128),
+  creator_id int,
+  upload_time timestamp DEFAULT now()
+)ENGINE = INNODB;
 
-
+drop table IF EXISTS t_grade_item;
+create table t_grade_item(
+  id int not null primary key,
+  grade_id int,
+  self_score float,
+  score float,
+  level int,
+  ratio float,
+  upload_time timestamp DEFAULT now()
+)ENGINE = INNODB;

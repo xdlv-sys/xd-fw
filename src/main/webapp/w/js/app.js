@@ -37,10 +37,16 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
             $rootScope.depts = data.data;
         });
 
-        $rootScope.firstSelectedRow = function(){
+        $rootScope.deptName = function(id) {
+            return angular.each($rootScope.depts, function(d) {
+                if (d.id === id) return d.name;
+            });
+        };
+
+        $rootScope.firstSelectedRow = function() {
             return this.grid.selection ? this.grid.selection.getSelectedRows()[0] : null;
         };
-        $rootScope.allSelectedRow = function(){
+        $rootScope.allSelectedRow = function() {
             return this.grid.selection ? this.grid.selection.getSelectedRows() : [];
         };
 
@@ -87,17 +93,17 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
             });
             delete param[key];
         };
-        
+
         $rootScope.onlyTheFirstDayPredicate = function(date) {
             return date.getDate() === 1;
         };
         $rootScope.monthFormat = {
             formatDate: function(date) {
-                if (date) return $filter('date')(date,'yyyy-MM');
+                if (date) return $filter('date')(date, 'yyyy-MM');
                 else return null;
             },
             parseDate: function(dateString) {
-                if (angular.isBlank(text)){
+                if (angular.isBlank(text)) {
                     return '';
                 }
                 return new Date(text);
@@ -170,7 +176,7 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
 
     //refresh
     var hash = window.location.hash;
-    if (hash !== '' && hash !== '#/login'){
+    if (hash !== '' && hash !== '#/login') {
         common.post('/user/sessionUser.cmd', {}, function(data) {
             if (data.data) {
                 $scope.$emit("loginSuccess", data.data, window.location.hash);
