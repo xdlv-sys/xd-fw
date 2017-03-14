@@ -1,5 +1,7 @@
 package xd.app.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -13,12 +15,23 @@ public class GradeItem {
     @TableGenerator(name = "GradeItem")
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "GradeItem")
     private Integer id;
-    private Integer gradeId;
     private Double selfScore;
     private Double score;
     private Integer level;
     private Double ratio;
     private Timestamp uploadTime;
+    @ManyToOne
+    @JoinColumn(name = "grade_id")
+    @JsonIgnore
+    private Grade grade;
+
+    public Grade getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Grade grade) {
+        this.grade = grade;
+    }
 
     public Integer getId() {
         return id;
@@ -26,14 +39,6 @@ public class GradeItem {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getGradeId() {
-        return gradeId;
-    }
-
-    public void setGradeId(Integer gradeId) {
-        this.gradeId = gradeId;
     }
 
     public Double getSelfScore() {
@@ -84,7 +89,6 @@ public class GradeItem {
         GradeItem gradeItem = (GradeItem) o;
 
         if (id != null ? !id.equals(gradeItem.id) : gradeItem.id != null) return false;
-        if (gradeId != null ? !gradeId.equals(gradeItem.gradeId) : gradeItem.gradeId != null) return false;
         if (selfScore != null ? !selfScore.equals(gradeItem.selfScore) : gradeItem.selfScore != null) return false;
         if (score != null ? !score.equals(gradeItem.score) : gradeItem.score != null) return false;
         if (level != null ? !level.equals(gradeItem.level) : gradeItem.level != null) return false;
@@ -97,7 +101,6 @@ public class GradeItem {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (gradeId != null ? gradeId.hashCode() : 0);
         result = 31 * result + (selfScore != null ? selfScore.hashCode() : 0);
         result = 31 * result + (score != null ? score.hashCode() : 0);
         result = 31 * result + (level != null ? level.hashCode() : 0);

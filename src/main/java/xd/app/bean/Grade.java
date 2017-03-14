@@ -19,8 +19,7 @@ public class Grade {
     private String fileName;
     private Integer creatorId;
     private Timestamp uploadTime;
-    @OneToMany
-    @JoinColumn(name = "creator_id")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "grade")
     List<GradeItem> items;
 
     public List<GradeItem> getItems() {
