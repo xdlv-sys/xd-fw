@@ -1,10 +1,10 @@
-controllers.controller('GradeUserCtrl', function ($scope, common, modal, configuration, $filter) {
+controllers.controller('GradeUserCtrl', function($scope, common, modal, configuration, $filter) {
 
-    $scope.loadUsers = function (page, limit) {
+    $scope.loadUsers = function(page, limit) {
         common.loadPage('/gradeUser/obtainUsers.cmd', {
             page: page,
             limit: limit
-        }, function (data) {
+        }, function(data) {
             $scope.userGrid.data = data.data;
             $scope.userGrid.totalItems = data.total;
         });
@@ -37,19 +37,19 @@ controllers.controller('GradeUserCtrl', function ($scope, common, modal, configu
         name: '在职状态',
         field: 'inService',
         cellTemplate: '<div class="ui-grid-cell-contents" >{{grid.options.configuration.i18n(0,"confirm",row.entity.inService)}}</div>'
-    }], $scope, $scope.loadUsers,configuration);
+    }], $scope, $scope.loadUsers, configuration);
 
     $scope.userGrid.refresh(true);
 
-    $scope.openUserInfo = function (conf) {
+    $scope.openUserInfo = function(conf) {
         //obtain all dept in advance
         common.loadAllPage('/dept/obtainDepts.cmd', {
-            success: function (data) {
+            success: function(data) {
                 var depts = data.data;
                 //replace user dept
                 if (conf.data && conf.data.user && conf.data.user.dept) {
                     var index = -1;
-                    depts.each(function (v, i) {
+                    depts.each(function(v, i) {
                         if (conf.data.user.dept.id === v.id) {
                             index = i;
                         }
@@ -58,16 +58,15 @@ controllers.controller('GradeUserCtrl', function ($scope, common, modal, configu
                         depts[index] = conf.data.user.dept;
                     }
                     //TODO simply process
-                    angular.forEach(conf.data.user.roles, function (r, i) {
-                        angular.each(conf.data.user.dept.roles, function (r1, j) {
+                    angular.forEach(conf.data.user.roles, function(r, i) {
+                        angular.each(conf.data.user.dept.roles, function(r1, j) {
                             if (r.id === r1.id) {
                                 conf.data.user.roles[i] = r1;
                                 return true;
                             }
                         });
                     });
-                    if (conf.data.user.roles
-                        && conf.data.user.dept.roles.length === conf.data.user.roles.length) {
+                    if (conf.data.user.roles && conf.data.user.dept.roles.length === conf.data.user.roles.length) {
                         conf.data.user.roles = conf.data.user.dept.roles;
                     }
                 }
@@ -75,17 +74,23 @@ controllers.controller('GradeUserCtrl', function ($scope, common, modal, configu
                     url: 'app/js/tpl/user-info.html',
                     width: 500,
                     depts: depts,
-                    organizations: configuration.group(1,'organization'),
-                    contractTypes: configuration.group(1,'contract-type'),
-                    confirms: configuration.group(0,'confirm'),
-                    sexs : configuration.group(0,'sex'),
-                    canGo: function (data) {
+                    organizations: configuration.group(1, 'organization'),
+                    contractTypes: configuration.group(1, 'contract-type'),
+                    confirms: configuration.group(0, 'confirm'),
+                    categories: configuration.group(1, 'category'),
+                    sexs: configuration.group(0, 'sex'),
+                    canGo: function(data) {
                         data = data || {};
                         return conf.mod || data.user && data.user.password === data.user.password2;
                     },
-                    ok: function (user) {
-                        
-                        angular.forEach(user.user.roles, function (v, i) {
+                    queryLeader: function(key) {
+                        return common.loadAllPage2('/gradeUser/obtainUsers.cmd', {
+                            fullName: key
+                        });
+                    },
+                    ok: function(user) {
+
+                        angular.forEach(user.user.roles, function(v, i) {
                             user['user.roles[' + i + '].id'] = v.id;
                         });
 
@@ -94,14 +99,15 @@ controllers.controller('GradeUserCtrl', function ($scope, common, modal, configu
                         user['user.password'] = user.user.password;
                         user['user.sex'] = user.user.sex;
 
-                        if (!angular.isBlank(user.id)){
+                        if (!angular.isBlank(user.id)) {
                             user['user.id'] = user.id;
                         }
 
                         delete user.user;
+                        user.leader = user.leader ? user.leader.id : null;
 
                         common.post('/gradeUser/saveUser.cmd', user, {
-                            success: function () {
+                            success: function() {
                                 $scope.userGrid.refresh();
                             }
                         });
@@ -111,26 +117,26 @@ controllers.controller('GradeUserCtrl', function ($scope, common, modal, configu
         });
     };
 
-    $scope.addUser = function () {
+    $scope.addUser = function() {
         $scope.openUserInfo({
             title: '新增用户'
         }, $scope);
     };
 
-    $scope.delUser = function () {
+    $scope.delUser = function() {
         var users = $scope.userGrid.selection.getSelectedRows();
-        var params = {userIds: []};
-        angular.forEach(users, function (v) {
+        var params = { userIds: [] };
+        angular.forEach(users, function(v) {
             params.userIds.push(v.id);
         });
         common.delete('/gradeUser/deleteUser.cmd', params, {
-            success: function () {
+            success: function() {
                 $scope.userGrid.refresh();
             }
         });
     };
 
-    $scope.modUser = function () {
+    $scope.modUser = function() {
         var user = $scope.userGrid.selection.getSelectedRows()[0];
         $scope.openUserInfo({
             title: '修改用户',

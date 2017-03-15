@@ -13,8 +13,8 @@ controllers.controller('UploadTemplateCtrl', function($scope, common, modal, con
         name: '完成',
         cellTemplate: '<div class="ui-grid-cell-contents" >{{row.entity.templates.length + "/17"}}</div>'
     }, {
-        name: '操作者',
-        field: 'creator'
+        name: '备注',
+        field: 'comments'
     }, {
         name: '状态',
         field: 'status',
@@ -34,15 +34,8 @@ controllers.controller('UploadTemplateCtrl', function($scope, common, modal, con
     $scope.disabledPush = function(){
         var rows = $scope.allSelectedRow();
         return rows.length < 1 || angular.each(rows, function(v){
-            return v.templates.length < 17 || v.status === 1;
+            return v.templates.length < 17 || v.status !== 0;
         });
     };
-    $scope.pushRecord = function(){
-        var params = $scope.constructSelectedId($scope.grid,'recordIds');
-        params.status = 1;
-        common.post('/mainTemplateRecord/push.cmd'
-            ,params, function(){
-                $scope.grid.refresh();
-            });
-    };
+    
 });

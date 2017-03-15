@@ -15,18 +15,14 @@ controllers.controller('UploadTemplate2Ctrl', function($scope, common, modal, co
         name: '所属年月',
         field: 'belong',
         cellTemplate: '<div class="ui-grid-cell-contents">{{grid.appScope.onlyYearAndMonth(row.entity.belong)}}</div>'
-    },{
-        name: '部门',
-        field: 'dept',
-        cellTemplate: '<div class="ui-grid-cell-contents">{{grid.appScope.deptName(row.entity.deptId)}}</div>'
     }, {
         name: '文件',
-        width: "55%",
+        width: "50%",
         cellTemplate: '<div class="ui-grid-cell-contents" ng-bind-html="grid.appScope.fileList(row.entity) | trusted"></div>'
     }, {
         name: '描述',
-        field: 'comments',
-        width: "20%"
+        width: "20%",
+        field: 'comments'
     },{
         name: '状态',
         field: 'status',
@@ -69,36 +65,6 @@ controllers.controller('UploadTemplate2Ctrl', function($scope, common, modal, co
     $scope.delete = function() {
         common.delete('/mainTemplateRecord/delete.cmd', $scope.constructSelectedId($scope.grid, 'recordIds'), function() {
             $scope.grid.refresh();
-        });
-    };
-    $scope.approve = function(status) {
-        var params = $scope.constructSelectedId($scope.grid, 'recordIds');
-        params.status = status;
-        params.comments = '通过';
-
-        var deferred = common.promise(function() {
-            common.post('/mainTemplateRecord/push.cmd', params, function() {
-                $scope.grid.refresh();
-            });
-        });
-
-        if (status === 2) {
-            modal.prompt({
-                content: '请输入拒绝理由:',
-                ok: function(result) {
-                    params.comments = result;
-                    deferred.resolve();
-                }
-            });
-        } else {
-            deferred.resolve();
-        }
-    };
-
-    $scope.canApprove = function(status) {
-        var rows = $scope.allSelectedRow();
-        return rows.length < 1 || angular.each(rows, function(v) {
-            return v.status === status;
         });
     };
 });

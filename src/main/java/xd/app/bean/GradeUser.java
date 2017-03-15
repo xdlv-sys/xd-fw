@@ -20,10 +20,19 @@ public class GradeUser{
     private String jobName;
     private Integer contractType;
     private Integer inService;
+    private Integer leader;
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="id")
     private User user;
+
+    public Integer getLeader() {
+        return leader;
+    }
+
+    public void setLeader(Integer leader) {
+        this.leader = leader;
+    }
 
     public User getUser() {
         return user;

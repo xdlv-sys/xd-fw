@@ -1,10 +1,19 @@
 <md-content flex layout="column" ng-controller="UploadTemplateCtrl">
-    <div layout="row" class="xd_tool_bar">
+    <div layout="row" class="xd_tool_bar" ng-if="allow(29)">
         <md-button class="md-primary md-raised" ng-click="addRecord()">新增模板</md-button>
-
-        <md-button class="md-primary md-raised" ng-click="pushRecord()" ng-disabled="disabledPush()">下发模板</md-button>
-
-        <md-button class="md-primary md-raised" ng-click="modRecord()" ng-disabled="grid.selection.getSelectedRows().length!==1">修改模板</md-button>
+        <md-button class="md-primary md-raised" ng-click="approve(grid,1)" ng-disabled="disabledPush()">提交审批</md-button>
+        <md-button class="md-primary md-raised" ng-click="modRecord()" ng-disabled="canApprove(grid,0)">修改模板</md-button>
     </div>
+    <!--manager approve-->
+    <div layout="row" class="xd_tool_bar" ng-if="allow(28)">
+        <md-button class="md-primary md-raised" ng-click="approve(grid,5)" ng-disabled="canApprove(grid,3)">审批通过</md-button>
+        <md-button class="md-primary md-raised" ng-click="approve(grid,4)" ng-disabled="canApprove(grid,3)">审批拒绝</md-button>
+    </div>
+    <!--leader approve-->
+    <div layout="row" class="xd_tool_bar" ng-if="allow(27)">
+        <md-button class="md-primary md-raised" ng-click="approve(grid,3)" ng-disabled="canApprove(grid,1)">审批通过</md-button>
+        <md-button class="md-primary md-raised" ng-click="approve(grid,2)" ng-disabled="canApprove(grid,1)">审批拒绝</md-button>
+    </div>
+
     <div flex ui-grid="grid" ui-grid-pagination ui-grid-selection ui-grid-auto-resize></div>
 </md-content>

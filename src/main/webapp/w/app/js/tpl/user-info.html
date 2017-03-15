@@ -16,6 +16,27 @@
     </md-input-container>
 </div>
 <div layout="row">
+    <md-autocomplete flex 
+          md-selected-item="modal.data.leader"
+          md-search-text="searchForLeader"
+          md-items="item in modal.queryLeader(searchForLeader)"
+          md-item-text="item.fullName"
+          md-min-length="0"
+          md-floating-label="班组长">
+        <md-item-template>
+          <span md-highlight-text="searchForLeader" md-highlight-flags="^i">{{item.fullName}}({{item.code}})</span>
+        </md-item-template>
+      </md-autocomplete>
+
+      <md-input-container flex>
+        <label>类别</label>
+        <md-select ng-model="modal.data.category" required>
+            <md-option ng-repeat="org in modal.categories" ng-value="org.index">{{org.value}}</md-option>
+        </md-select>
+    </md-input-container>
+</div>
+
+<div layout="row">
     <md-input-container flex>
         <label>所属机构</label>
         <md-select name="organization" ng-model="modal.data.organization" required>

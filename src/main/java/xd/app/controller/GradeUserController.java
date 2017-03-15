@@ -1,6 +1,7 @@
 package xd.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -23,8 +24,8 @@ public class GradeUserController extends BaseController{
 
     @RequestMapping("obtainUsers")
     @ResponseBody
-    public PageContent obtainUsers(int page, int limit){
-        Page<GradeUser> list = gradeUserRepository.findAll(pageRequest(page, limit,new Sort(Sort.Direction.ASC, "id")));
+    public PageContent obtainUsers(int page, int limit, GradeUser query){
+        Page<GradeUser> list = gradeUserRepository.findAll(Example.of(query,queryMatcher()),pageRequest(page, limit,new Sort(Sort.Direction.ASC, "id")));
         return page(list);
     }
 

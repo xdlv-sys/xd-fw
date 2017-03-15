@@ -214,9 +214,9 @@ Array.prototype.pushAll = function(array) {
 };
 
 if (!angular.each) {
-    angular.each = function(array, f) {
+    angular.each = function(array, f, last) {
         if (angular.isBlank(array) || !f) {
-            return;
+            return last;
         }
         var tmp;
         for (var i = 0; i < array.length; i++) {
@@ -225,5 +225,6 @@ if (!angular.each) {
                 return tmp;
             }
         }
+        return last;
     };
 }

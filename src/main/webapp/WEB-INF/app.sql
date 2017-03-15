@@ -3,6 +3,9 @@ insert into t_dynamic_conf values(1,'1','organization.1','省公司','所属机�
 insert into t_dynamic_conf values(2,'1','organization.2','部门(地市)','所属机构');
 insert into t_dynamic_conf values(3,'1','organization.3','班组','所属机构');
 insert into t_dynamic_conf values(4,'1','contract-type.1','业务代办','用工性质');
+insert into t_dynamic_conf values(5,'1','contract-type.2','合同用工','用工性质');
+insert into t_dynamic_conf values(6,'1','category.1','行政','组员分类');
+
 
 delete from t_dept where id >= 0;
 insert into t_dept values(0,-1,'省公司');
@@ -30,9 +33,11 @@ insert into t_role values(2, '人力资源经理');
 insert into t_role values(3, '文书');
 insert into t_role values(4, '地市（部门）经理');
 insert into t_role values(5, '班组长');
+insert into t_role values(6, '分管领导');
+insert into t_role values(7, '总经理');
 
 delete from t_dept_role where role_id > -1;
-insert into t_dept_role VALUES (0,1),(0,2);
+insert into t_dept_role VALUES (0,1),(0,2),(0,6),(0,7);
 insert into t_dept_role VALUES (1,3),(1,4),(1,5);
 insert into t_dept_role VALUES (2,3),(2,4),(2,5);
 insert into t_dept_role VALUES (3,3),(3,4),(3,5);
@@ -61,6 +66,7 @@ create table t_grade_user(
   category int,
   job_name varchar(16),
   contract_type int,
+  leader int,
   in_service int
 )ENGINE = INNODB;
 
@@ -81,10 +87,14 @@ insert into t_mod values(17,'上传模板','/mainTemplateRecord/s',null,null,16)
 insert into t_mod values(18,'删除模板','/mainTemplateRecord/d',null,null,16);
 insert into t_mod values(19,'审批通过','/mainTemplateRecord/p',null,null,16);
 insert into t_mod values(20,'审批拒绝','/mainTemplateRecord/p',null,null,16);
+insert into t_mod values(21,'分管领导审批',null,null,'fa fa-cloud-upload',15);
+insert into t_mod values(22,'总经理审批',null,null,'fa fa-cloud-upload',15);
 
 insert into t_role_mod VALUES (1,14),(1,15);
 insert into t_role_mod VALUES (3,14),(3,16),(3,17),(3,18);
 insert into t_role_mod VALUES (4,14),(4,16),(4,19),(4,20);
+insert into t_role_mod VALUES (6,14),(6,15),(6,21);
+insert into t_role_mod VALUES (7,14),(7,15),(4,22);
 
 drop table IF EXISTS t_main_template;
 create table t_main_template(
@@ -140,3 +150,11 @@ create table t_grade_item(
   ratio float,
   upload_time timestamp DEFAULT now()
 )ENGINE = INNODB;
+
+insert into t_mod values(27,'分管领导审批',null,null,'fa fa-cloud-upload',15);
+insert into t_mod values(28,'总经理审批',null,null,'fa fa-cloud-upload',15);
+insert into t_mod values(29,'人力资源主管上传',null,null,'fa fa-cloud-upload',15);
+
+insert into t_role_mod VALUES (6,14),(6,15),(6,27);
+insert into t_role_mod VALUES (7,14),(7,15),(7,28);
+insert into t_role_mod VALUES (1,29);

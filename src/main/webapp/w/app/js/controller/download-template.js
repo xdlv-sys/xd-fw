@@ -1,7 +1,7 @@
 controllers.controller('DownloadTemplateCtrl', function($scope, common, modal, configuration, $state, $filter,gradeConf) {
 
     $scope.loadTemplates = function(page, limit){
-        $scope.loadItem(page, limit, 1, $scope.grid);
+        $scope.loadItem(page, limit, 5, $scope.grid);
     }
 
     $scope.grid = common.createGridOption([{
