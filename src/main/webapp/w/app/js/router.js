@@ -3,17 +3,15 @@
 angular.module('xdApp').config(function($stateProvider) {
     $stateProvider.xdParse2('grade-user');
 
-    $stateProvider.xdParse('upload-template', {
-        controller: 'TemplateCtrl'
-    });
-    $stateProvider.xdParse('add-template-item', {
-        controller: 'TemplateCtrl'
-    });
-    $stateProvider.xdParse('download-template', {
-        controller: 'TemplateCtrl'
-    });
-    $stateProvider.xdParse('approve', {
-        controller: 'TemplateCtrl'
-    });
-    
+    function f(n) {
+        n.each(function(v) {
+            $stateProvider.xdParse(v, {
+                controller: 'TemplateCtrl'
+            });
+        });
+    }
+    f(['upload-template'
+        ,'add-template-item'
+        ,'download-template'
+        ,'approve']);
 });

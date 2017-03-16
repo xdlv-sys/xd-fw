@@ -1,0 +1,13 @@
+<div layout="row" style="margin:0 auto; width: 300px;">
+    <md-input-container>
+        <label>所属年月</label>
+        <md-datepicker ng-model="modal.data.belong" xd-date md-mode="month" md-date-locale="monthFormat" required></md-datepicker>
+    </md-input-container>
+</div>
+<div layout="row">
+    <a flex href="../mainTemplate/showFile.cmd?id={{modal.data.id}}" ng-if="data.fileName" style="margin:auto 0;">{{modal.data.fileName}}</a>
+    <lf-ng-md-file-input ng-hide="modal.data.fileName" flex class="upload_file" aria-label="fileupload" lf-files='modal.data.importFile' lf-placeholder="选择Excel文件上传" lf-browse-label="选择文件" lf-remove-label="删除" accept="application/msexcel" lf-totalsize="5MB" progress> </lf-ng-md-file-input>
+    
+    <md-button class="fa fa-remove" ng-click="modal.data.fileName=undefined" ng-show="modal.data.fileName"></md-button>
+</div>
+<div flex ui-grid="grid" ui-grid-pagination ui-grid-selection ui-grid-auto-resize></div>
