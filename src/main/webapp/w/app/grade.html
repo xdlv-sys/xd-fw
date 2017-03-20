@@ -2,8 +2,8 @@
     <div layout="row" class="xd_tool_bar">
         <div ng-if="allow(23)">
             <md-button class="md-primary md-raised" ng-click="add()">上传绩效</md-button>
-            <md-button class="md-primary md-raised" ng-click="mod()" ng-disabled="disabledPush()">修改绩效</md-button>
-            <md-button class="md-primary md-raised" ng-click="del()" ng-disabled="disabledPush()">删除绩效</md-button>
+            <md-button class="md-primary md-raised" ng-click="mod()" ng-disabled="grid.selection.getSelectedRows().length!==1 || disabledMod()">修改绩效</md-button>
+            <md-button class="md-primary md-raised" ng-click="del()" ng-disabled="grid.selection.getSelectedRows().length < 1 || disabledMod()">删除绩效</md-button>
         </div>
         <div ng-if="allow(24) || allow(25) || allow(26)">
             <md-button class="md-primary md-raised" ng-click="approve()" ng-disabled="grid.selection.getSelectedRows().length!==1">审批通过</md-button>

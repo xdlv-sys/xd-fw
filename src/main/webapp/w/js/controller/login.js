@@ -1,5 +1,5 @@
 controllers.controller('LoginCtrl',
-    function($scope, common) {
+    function($scope, common,modal) {
         $scope.login = function() {
             common.post('/user/userLogin.cmd', $scope.user, {
                 success: function(data) {

@@ -4,16 +4,9 @@ controllers.controller('GradeCtrl', function($scope, common, modal, configuratio
         common.loadPage('/grade/obtain.cmd',{
             page: page,
             limit: limit,
-            creatorId: $scope.user.id
+            'user.id' : $scope.user.id
         }, $scope.fillGrid($scope.grid));
     }
-    $scope.fileList = function(v) {
-        var html = '';
-        angular.each(v.items, function(t) {
-            html += '<a href="../mainTemplate/showFile.cmd?id=' + t.id + '" alt="' + t.fileName + '">' + t.fileName + '</a>&nbsp;&nbsp;';
-        });
-        return html;
-    };
 
     $scope.grid = common.createGridOption([{
         name: '所属年月',
@@ -21,12 +14,11 @@ controllers.controller('GradeCtrl', function($scope, common, modal, configuratio
         cellTemplate: '<div class="ui-grid-cell-contents">{{grid.appScope.onlyYearAndMonth(row.entity.belong)}}</div>'
     },{
         name: '部门',
-        field: 'dept',
-        cellTemplate: '<div class="ui-grid-cell-contents">{{grid.appScope.deptName(row.entity.deptId)}}</div>'
+        field: 'user.user.dept.name'
     }, {
         name: '文件',
         width: "55%",
-        cellTemplate: '<div class="ui-grid-cell-contents" ng-bind-html="grid.appScope.fileList(row.entity) | trusted"></div>'
+        cellTemplate: '<div class="ui-grid-cell-contents"><a href="../grade/showFile.cmd?id={{row.entity.id}}">{{row.entity.fileName}}</a></div>'
     }, {
         name: '描述',
         field: 'comments',
@@ -38,6 +30,12 @@ controllers.controller('GradeCtrl', function($scope, common, modal, configuratio
     }], $scope, $scope.load, gradeConf);
 
     $scope.grid.refresh(true);
+
+    $scope.disabledMod = function(){
+        return angular.each($scope.grid.data, function(d){
+            return d.status !== 0 && d.status !== 2;
+        });
+    }
 
     $scope.add = function(conf){
         modal.openWithCtrl('GradeItemCtrl',{

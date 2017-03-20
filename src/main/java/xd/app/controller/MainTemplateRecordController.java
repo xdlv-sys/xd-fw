@@ -106,12 +106,4 @@ public class MainTemplateRecordController extends TemplateController {
         });
         return DONE;
     }
-
-    private void transfer(MultipartFile file, Date belong, Integer deptId, Byte genre) {
-        try {
-            file.transferTo(templateFile(belong, deptId, genre, file.getOriginalFilename()));
-        } catch (IOException e) {
-            throw new FwException("", e);
-        }
-    }
 }

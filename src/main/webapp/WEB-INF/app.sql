@@ -137,6 +137,7 @@ create table t_grade(
   belong date,
   file_name varchar(128),
   creator_id int,
+  status TINYINT,
   upload_time timestamp DEFAULT now()
 )ENGINE = INNODB;
 

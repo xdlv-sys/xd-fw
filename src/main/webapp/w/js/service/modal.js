@@ -66,8 +66,11 @@ services.service('modal', function($mdDialog, $mdToast) {
             templateUrl: 'js/tpl/dialog-common.html',
             parent: angular.element(document.body),
             clickOutsideToClose: false,
+            fullscreen: true,
             locals: {
-                modal: modal
+                dialogConf: {
+                    modal: modal
+                }
             }
         });
     };

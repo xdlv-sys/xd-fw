@@ -180,9 +180,14 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
         return new Date(d);
     };
     $rootScope.fillGrid = function(grid){
-        return function(data){
-            grid.data = data.data;
-            grid.totalItems = data.total;
+        return function(data, total){
+            if (total){
+                grid.data = data;
+                grid.totalItems = total;
+            } else {
+                grid.data = data.data;
+                grid.totalItems = data.total;
+            }
         }
     };
     

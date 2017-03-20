@@ -6,19 +6,30 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import xd.app.bean.Grade;
+import xd.app.bean.GradeUser;
+import xd.app.bean.MainTemplate;
 import xd.app.dao.GradeRepository;
+import xd.app.dao.GradeUserRepository;
 import xd.fw.controller.BaseController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by xd on 2016/12/7.
  */
 @Controller
 @RequestMapping("grade")
-public class GradeController extends BaseController{
+public class GradeController extends TemplateController{
     @Autowired
     GradeRepository gradeRepository;
+    @Autowired
+    GradeUserRepository gradeUserRepository;
 
     @RequestMapping("obtain")
     @ResponseBody
@@ -38,7 +49,22 @@ public class GradeController extends BaseController{
 
     @RequestMapping("save")
     @ResponseBody
-    public String saveUser(Grade grade) throws Exception {
+    public String save(@RequestParam(required = false) MultipartFile file, Grade grade) throws Exception {
+        if (file != null){
+            GradeUser gradeUser = gradeUserRepository.findOne(grade.getUser().getId());
+            transfer(file,grade.getBelong(),gradeUser.getUser().getDept().getId(),ZZ_GRADE_TYPE);
+            grade.setFileName(file.getOriginalFilename());
+        }
+        grade.getItems().forEach((item)->item.setGrade(grade));
+        gradeRepository.save(grade);
+
         return DONE;
+    }
+    @RequestMapping("showFile")
+    public ModelAndView showFile(Integer id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Grade grade = gradeRepository.findOne(id);
+        return download(request, response, relativeTemplatePath(grade.getBelong()
+                , grade.getUser().getUser().getDept().getId()
+                , ZZ_GRADE_TYPE), grade.getFileName());
     }
 }
