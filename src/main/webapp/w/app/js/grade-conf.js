@@ -19,7 +19,7 @@ services.service('gradeConf', function(){
 		} else {
 			switch (v.status){
 				case 0: return '草稿';
-				case 1: return '部门经理';
+				case 1: return '己提交';
 				case 2: return '部门经理审核未通过';
 				case 3: return '部门经理审核通过';
 				case 4: return '部门经理审核通过';

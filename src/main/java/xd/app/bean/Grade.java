@@ -1,8 +1,7 @@
 package xd.app.bean;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,7 +17,7 @@ public class Grade {
     private Date belong;
     private String fileName;
     private Byte status;
-    private Timestamp uploadTime;
+    private Date uploadTime;
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "grade")
     List<GradeItem> items;
 
@@ -74,11 +73,11 @@ public class Grade {
         this.fileName = fileName;
     }
 
-    public Timestamp getUploadTime() {
+    public Date getUploadTime() {
         return uploadTime;
     }
 
-    public void setUploadTime(Timestamp uploadTime) {
+    public void setUploadTime(Date uploadTime) {
         this.uploadTime = uploadTime;
     }
 

@@ -5,7 +5,7 @@
     </md-input-container>
 </div>
 <div layout="row">
-    <a flex href="../mainTemplate/showFile.cmd?id={{modal.data.id}}" ng-if="data.fileName" style="margin:auto 0;">{{modal.data.fileName}}</a>
+    <a flex href="../grade/showFile.cmd?id={{modal.data.id}}" ng-if="modal.data.fileName" style="margin:auto 0;">{{modal.data.fileName}}</a>
     <lf-ng-md-file-input ng-hide="modal.data.fileName" flex class="upload_file" aria-label="fileupload" lf-files='modal.data.importFile' lf-placeholder="选择Excel文件上传" lf-browse-label="选择文件" lf-remove-label="删除" accept="application/msexcel" lf-totalsize="5MB" progress> </lf-ng-md-file-input>
     
     <md-button class="fa fa-remove" ng-click="modal.data.fileName=undefined" ng-show="modal.data.fileName"></md-button>

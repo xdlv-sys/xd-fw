@@ -35,10 +35,4 @@ public class GradeItemController extends BaseController{
         }
         return DONE;
     }
-
-    @RequestMapping("save")
-    @ResponseBody
-    public String save(GradeItem gradeItem) throws Exception {
-        return DONE;
-    }
 }

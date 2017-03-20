@@ -27,7 +27,7 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
                 }
             });
         });
-        if (mods.length < 1){
+        if (mods.length < 1) {
             modal.alert('非常抱歉，你没有权限访问，请联系管理员');
             return;
         }
@@ -173,9 +173,17 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
         }
         return new Date(d);
     };
-    $rootScope.fillGrid = function(grid){
-        return function(data, total){
-            if (total){
+    $rootScope.firstSelectedRow = function() {
+        return this.grid.selection.getSelectedRows()[0];
+    };
+    $rootScope.allSelectedRow = function() {
+        return this.grid.selection.getSelectedRows();
+    };
+
+    $rootScope.fillGrid = function(grid) {
+        grid = grid ? grid : this.grid;
+        return function(data, total) {
+            if (total) {
                 grid.data = data;
                 grid.totalItems = total;
             } else {
@@ -184,7 +192,7 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
             }
         }
     };
-    
+
     common.post('/user/version.cmd', {}, function(data) {
         $scope.appName = data.name;
         document.title = $scope.appName;
