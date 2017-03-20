@@ -1,12 +1,15 @@
-controllers.controller('ApproveCtrl', function($scope, common, modal, configuration, $filter, gradeConf) {
+controllers.controller('GradeCtrl', function($scope, common, modal, configuration, $filter, gradeConf) {
 
-    $scope.loadTemplates = function(page, limit) {
-        $scope.loadRecord(page, limit, 3, $scope.grid
-            , null,$scope.user.id);
+    $scope.load = function(page, limit) {
+        common.loadPage('/grade/obtain.cmd',{
+            page: page,
+            limit: limit,
+            creatorId: $scope.user.id
+        }, $scope.fillGrid($scope.grid));
     }
     $scope.fileList = function(v) {
         var html = '';
-        angular.each(v.templates, function(t) {
+        angular.each(v.items, function(t) {
             html += '<a href="../mainTemplate/showFile.cmd?id=' + t.id + '" alt="' + t.fileName + '">' + t.fileName + '</a>&nbsp;&nbsp;';
         });
         return html;
@@ -32,37 +35,15 @@ controllers.controller('ApproveCtrl', function($scope, common, modal, configurat
         name: '状态',
         field: 'status',
         cellTemplate: '<div class="ui-grid-cell-contents" >{{grid.options.configuration.status(row.entity)}}</div>'
-    }], $scope, $scope.loadTemplates, gradeConf);
+    }], $scope, $scope.load, gradeConf);
 
     $scope.grid.refresh(true);
 
     $scope.add = function(conf){
-        modal.open({
+        modal.openWithCtrl('GradeItemCtrl',{
             title: '上传绩效',
             url: 'app/js/tpl/z-template-info.html',
-            width: 600,
-            data: angular.extend({
-                templates: [{}]
-            },conf),
-            toolbar: {
-                cls: 'fa fa-plus icon-button',
-                titleClick: function(data) {
-                    if (data.templates.length === 5) {
-                        modal.toast('最大附件数为5个');
-                        return;
-                    }
-                    data.templates[data.templates.length] = {};
-                }
-            },
-            ok: function(data) {
-                data.status = 0;
-                data.comments = ' ';
-                $scope.save(data, 2, function() {
-                    $scope.grid.refresh();
-                });
-            }
+            width: 600
         });
     };
-
-
 });

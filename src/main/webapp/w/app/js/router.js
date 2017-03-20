@@ -13,5 +13,5 @@ angular.module('xdApp').config(function($stateProvider) {
     f(['upload-template'
         ,'add-template-item'
         ,'download-template'
-        ,'approve']);
+        ,'grade']);
 });

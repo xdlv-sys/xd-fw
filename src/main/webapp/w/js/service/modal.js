@@ -67,9 +67,7 @@ services.service('modal', function($mdDialog, $mdToast) {
             parent: angular.element(document.body),
             clickOutsideToClose: false,
             locals: {
-                dialogConf: {
-                    modal: modal
-                }
+                modal: modal
             }
         });
     };

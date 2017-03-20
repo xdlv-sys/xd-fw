@@ -1,14 +1,12 @@
 controllers.controller('TemplateCtrl', function($scope, common, modal, configuration, $filter) {
+
     $scope.loadItem = function(page, limit, status, grid) {
         common.loadPage('/mainTemplate/obtain.cmd', {
             page: page,
             limit: limit,
             deptId: $scope.user.dept.id,
             'record.status': status
-        }, function(data) {
-            grid.data = data.data;
-            grid.totalItems = data.total;
-        });
+        }, $scope.fillGrid(grid));
     };
 
     $scope.loadRecord = function(page, limit, genre, grid, deptId, userId) {
