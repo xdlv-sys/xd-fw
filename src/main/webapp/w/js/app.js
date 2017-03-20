@@ -135,14 +135,8 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
         };
 
         if (!goState) {
-            var state = angular.each(mods, function(m) {
-                if (m.type === 'link') {
-                    return m.state;
-                } else {
-                    return m.pages[0].state;
-                }
-            });
-            $state.go(state);
+            //open the default state which is first state in menu
+            $state.go(menu.openedSection.state ? menu.openedSection.state : menu.openedSection.pages[0].state);
         }
     });
 
