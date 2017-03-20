@@ -25,6 +25,18 @@ public class GradeItem {
     @JsonIgnore
     private Grade grade;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private GradeUser user;
+
+    public GradeUser getUser() {
+        return user;
+    }
+
+    public void setUser(GradeUser user) {
+        this.user = user;
+    }
+
     public Grade getGrade() {
         return grade;
     }

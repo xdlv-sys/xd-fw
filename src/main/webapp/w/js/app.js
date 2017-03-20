@@ -18,9 +18,7 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
     $scope.loginSuccess = false;
 
     $scope.$on('loginSuccess', function(event, user, goState) {
-        $scope.loginSuccess = true;
         $rootScope.user = $scope.user = user;
-
         var mods = [];
         user.roles.each(function(role) {
             role.mods.each(function(mod) {
@@ -29,6 +27,11 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
                 }
             });
         });
+        if (mods.length < 1){
+            modal.alert('非常抱歉，你没有权限访问，请联系管理员');
+            return;
+        }
+
         var userMods = angular.copy(mods);
         mods = menu.parseMenu(mods, true);
 
@@ -37,107 +40,11 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
             $rootScope.depts = data.data;
         });
 
-        $rootScope.deptName = function(id) {
-            return angular.each($rootScope.depts, function(d) {
-                if (d.id === id) return d.name;
-            });
-        };
-
-        $rootScope.firstSelectedRow = function() {
-            return this.grid.selection ? this.grid.selection.getSelectedRows()[0] : null;
-        };
-        $rootScope.allSelectedRow = function() {
-            return this.grid.selection ? this.grid.selection.getSelectedRows() : [];
-        };
-
-        $rootScope.back = function() {
-            history.back();
-        };
-        $rootScope.allow = function(modId) {
-            var allow = false;
-            $rootScope.mods.each(function(v) {
-                if (!allow && v.id === modId) {
-                    allow = true;
-                }
-            });
-            return allow;
-        };
-
-        $rootScope.constructSelectedId = function(grid, key) {
-            var products = grid.selection.getSelectedRows();
-            var params = {};
-            params[key] = [];
-            angular.forEach(products, function(v) {
-                params[key].push(v.id);
-            });
-            return params;
-        };
-        $rootScope.convertDate = function(d) {
-            if (!angular.isDate(d)) {
-                return d;
-            }
-            return $filter('date')(d, 'yyyy-MM-dd');
-        };
-        //used to convert all data and nested objectes to display, now unused since we have a directive for this
-        $rootScope.convertDates = function(obj) {
-            //convert all date time
-            angular.forEach(obj, function(v) {
-                obj[i] = $rootScope.convertDates(v);
-            });
-        };
-        $rootScope.convertList = function(param, key, subKey) {
-            subKey = subKey || 'id';
-            var array = param[key];
-            angular.forEach(array, function(v, i) {
-                param[key + '[' + i + '].' + subKey] = v;
-            });
-            delete param[key];
-        };
-
-        $rootScope.onlyTheFirstDayPredicate = function(date) {
-            return date.getDate() === 1;
-        };
-        $rootScope.monthFormat = {
-            formatDate: function(date) {
-                if (date) return $filter('date')(date, 'yyyy-MM');
-                else return null;
-            },
-            parseDate: function(dateString) {
-                if (angular.isBlank(text)) {
-                    return '';
-                }
-                return new Date(text);
-            }
-        };
-        //used to convert all date and list parameters to the right style
-        $rootScope.convertParams = function(param, key) {
-            //convert all date time
-            for (var p in param) {
-                param[p] = $rootScope.convertDate(param[p]);
-            }
-            //convert the nested parameters
-            var array = param[key];
-            angular.forEach(array, function(v, i) {
-                for (var k in v) {
-                    if (k === '$$hashKey') {
-                        continue;
-                    }
-                    param[key + '[' + i + '].' + k] = $rootScope.convertDate(v[k]);
-                }
-            });
-            delete param[key];
-        };
-        $rootScope.onlyYearAndMonth = function(d) {
-            if (angular.isBlank(d)) {
-                return '';
-            }
-            return $filter('date')(new Date(d), 'yyyy-MM');
-        };
-
         if (!goState) {
             //open the default state which is first state in menu
             $state.go(menu.openedSection.state ? menu.openedSection.state : menu.openedSection.pages[0].state);
         }
+        $scope.loginSuccess = true;
     });
 
     $scope.logout = function() {
@@ -169,17 +76,115 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
     };
 
     //refresh
-    var hash = window.location.hash;
-    if (hash !== '' && hash !== '#/login') {
-        common.post('/user/sessionUser.cmd', {}, function(data) {
-            if (data.data) {
-                $scope.$emit("loginSuccess", data.data, window.location.hash);
-            } else {
-                $state.go('login');
+    common.post('/user/sessionUser.cmd', {}, function(data) {
+        if (data.data) {
+            $scope.$emit("loginSuccess", data.data, window.location.hash);
+        } else {
+            $state.go('login');
+        }
+    });
+
+    $rootScope.back = function() {
+        history.back();
+    };
+    $rootScope.allow = function(modId) {
+        var allow = false;
+        $rootScope.mods.each(function(v) {
+            if (!allow && v.id === modId) {
+                allow = true;
             }
         });
-    }
+        return allow;
+    };
 
+    $rootScope.constructSelectedId = function(grid, key) {
+        var products = grid.selection.getSelectedRows();
+        var params = {};
+        params[key] = [];
+        angular.forEach(products, function(v) {
+            params[key].push(v.id);
+        });
+        return params;
+    };
+    $rootScope.convertDate = function(d) {
+        if (!angular.isDate(d)) {
+            return d;
+        }
+        return $filter('date')(d, 'yyyy-MM-dd');
+    };
+    //used to convert all data and nested objectes to display, now unused since we have a directive for this
+    $rootScope.convertDates = function(obj) {
+        //convert all date time
+        angular.forEach(obj, function(v) {
+            obj[i] = $rootScope.convertDates(v);
+        });
+    };
+    $rootScope.convertList = function(param, key, subKey) {
+        subKey = subKey || 'id';
+        var array = param[key];
+        angular.forEach(array, function(v, i) {
+            param[key + '[' + i + '].' + subKey] = v;
+        });
+        delete param[key];
+    };
+
+    $rootScope.onlyTheFirstDayPredicate = function(date) {
+        return date.getDate() === 1;
+    };
+    $rootScope.monthFormat = {
+        formatDate: function(date) {
+            if (date) return $filter('date')(date, 'yyyy-MM');
+            else return null;
+        },
+        parseDate: function(dateString) {
+            if (angular.isBlank(text)) {
+                return '';
+            }
+            return new Date(text);
+        }
+    };
+    //used to convert all date and list parameters to the right style
+    $rootScope.convertParams = function(param, key) {
+        //convert all date time
+        for (var p in param) {
+            param[p] = $rootScope.convertDate(param[p]);
+        }
+        //convert the nested parameters
+        var array = param[key];
+        angular.forEach(array, function(v, i) {
+            for (var k in v) {
+                if (k === '$$hashKey') {
+                    continue;
+                }
+                param[key + '[' + i + '].' + k] = $rootScope.convertDate(v[k]);
+            }
+        });
+        delete param[key];
+    };
+    $rootScope.onlyYearAndMonth = function(d) {
+        if (angular.isBlank(d)) {
+            return '';
+        }
+        return $filter('date')(new Date(d), 'yyyy-MM');
+    };
+    $rootScope.safeDate = function(d) {
+        if (angular.isBlank(d)) {
+            return null;
+        }
+        return new Date(d);
+    };
+    $rootScope.fillGrid = function(grid){
+        return function(data, total){
+            if (total){
+                grid.data = data;
+                grid.totalItems = total;
+            } else {
+                grid.data = data.data;
+                grid.totalItems = data.total;
+            }
+        }
+    };
+    
     common.post('/user/version.cmd', {}, function(data) {
         $scope.appName = data.name;
         document.title = $scope.appName;
