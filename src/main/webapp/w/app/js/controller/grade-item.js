@@ -36,6 +36,16 @@ controllers.controller('GradeItemCtrl', function($scope, $rootScope, $stateParam
         name: '分值',
         field: 'score',
         editableCellTemplate: template
+    }, {
+        name: '等级',
+        field: 'level',
+        visible: !$rootScope.allow(23),
+        editableCellTemplate: template
+    }, {
+        name: '权重',
+        field: 'ratio',
+        visible: !$rootScope.allow(23),
+        editableCellTemplate: template
     }], $scope, $scope.load, gradeConf);
 
     $scope.modal.answer = function() {
@@ -44,6 +54,7 @@ controllers.controller('GradeItemCtrl', function($scope, $rootScope, $stateParam
             params.file = params.importFile[0].lfFile;
         }
         params['user.id'] = $rootScope.user.id;
+        params['dept.id'] = $rootScope.user.dept.id;
         params.status = 0;
 
         angular.forEach($scope.grid.data, function(d, i) {
@@ -54,6 +65,7 @@ controllers.controller('GradeItemCtrl', function($scope, $rootScope, $stateParam
         });
         delete params.items;
         delete params.user;
+        delete params.dept;
 
         common.uploadFile('/grade/save.cmd', params, {
             success: function() {

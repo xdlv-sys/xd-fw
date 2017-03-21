@@ -39,9 +39,6 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                 && !record.getPassword().equals(user.getPassword())) {
             user.setPassword(FwUtil.md5(user.getPassword()));
             //merge(user);
-        } else {
-             user.setPassword(FwUtil.md5(user.getPassword()));
-            //save(user);
         }
         user.setDept(deptRepository.findOne(user.getDept().getId()));
 

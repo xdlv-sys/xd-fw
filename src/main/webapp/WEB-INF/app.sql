@@ -121,15 +121,15 @@ create table t_main_template_record(
 
 insert into t_mod values(21,'绩效审批',null,null,'',0);
 insert into t_mod values(22,'绩效合同书',null,'grade','fa fa-file-excel-o',21);
-insert into t_mod values(23,'班组长','/grade/bz',null,null,22);
-insert into t_mod values(24,'部门经理','/grade/bm',null,null,22);
-insert into t_mod values(25,'人力资源主管','/grade/rl',null,null,22);
-insert into t_mod values(26,'人力资源经理','/grade/jl',null,null,22);
+insert into t_role_mod VALUES (5,21),(5,22);
 
-insert into t_role_mod VALUES (5,21),(5,22),(5,23);
-insert into t_role_mod VALUES (4,21),(4,22),(4,24);
-insert into t_role_mod VALUES (1,21),(1,22),(1,25);
-insert into t_role_mod VALUES (2,21),(2,22),(2,26);
+insert into t_mod values(23,'绩效审批',null,'approve','fa fa-file-zip-o',21);
+insert into t_role_mod VALUES (3,21),(3,23);
+insert into t_role_mod VALUES (4,21),(4,23);
+insert into t_role_mod VALUES (6,21),(6,23);
+insert into t_role_mod VALUES (7,21),(7,23);
+insert into t_role_mod VALUES (2,21),(2,23);
+insert into t_role_mod VALUES (1,21),(1,23);
 
 drop table IF EXISTS t_grade;
 create table t_grade(
@@ -137,6 +137,7 @@ create table t_grade(
   belong date,
   file_name varchar(128),
   creator_id int,
+  dept_id int,
   status TINYINT,
   upload_time timestamp DEFAULT now()
 )ENGINE = INNODB;

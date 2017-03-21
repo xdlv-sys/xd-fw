@@ -96,6 +96,11 @@ controllers.controller('xdController', function($scope, $rootScope, common, moda
         });
         return allow;
     };
+    $rootScope.isRole = function(roleId) {
+        return angular.each($rootScope.user.roles, function(r){
+            return r.id === roleId
+        });
+    };
 
     $rootScope.constructSelectedId = function(grid, key) {
         var products = grid.selection.getSelectedRows();

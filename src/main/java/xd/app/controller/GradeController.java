@@ -12,10 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import xd.app.bean.Grade;
 import xd.app.bean.GradeUser;
-import xd.app.bean.MainTemplate;
 import xd.app.dao.GradeRepository;
 import xd.app.dao.GradeUserRepository;
-import xd.fw.controller.BaseController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

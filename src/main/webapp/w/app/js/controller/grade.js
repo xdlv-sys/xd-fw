@@ -1,20 +1,32 @@
 controllers.controller('GradeCtrl', function($scope, common, modal, configuration, $filter, gradeConf) {
 
+    $scope.isDeptManager = function(){
+        return $scope.allow(23);
+    };
     $scope.load = function(page, limit) {
-        common.loadPage('/grade/obtain.cmd',{
+        var params = {
             page: page,
-            limit: limit,
-            'user.user.dept.id' : $scope.user.dept.id
-        }, $scope.fillGrid($scope.grid));
-    }
+            limit: limit
+        };
+        if ($scope.isDeptManager()){
+            params['user.id'] = $scope.user.id;
+        } else {
+            params['dept.id'] = $scope.user.dept.id;
+        }
+        
+        common.loadPage('/grade/obtain.cmd',params, $scope.fillGrid($scope.grid));
+    };
 
     $scope.grid = common.createGridOption([{
         name: '所属年月',
         field: 'belong',
         cellTemplate: '<div class="ui-grid-cell-contents">{{grid.appScope.onlyYearAndMonth(row.entity.belong)}}</div>'
     },{
+        name: '班组长',
+        field: 'user.fullName'
+    },{
         name: '部门',
-        field: 'user.user.dept.name'
+        field: 'dept.name'
     }, {
         name: '文件',
         width: "35%",

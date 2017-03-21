@@ -1,5 +1,7 @@
 package xd.app.bean;
 
+import xd.fw.bean.Dept;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +26,17 @@ public class Grade {
     @ManyToOne
     @JoinColumn(name = "creator_id")
     private GradeUser user;
+    @ManyToOne
+    @JoinColumn(name = "dept_id")
+    private Dept dept;
+
+    public Dept getDept() {
+        return dept;
+    }
+
+    public void setDept(Dept dept) {
+        this.dept = dept;
+    }
 
     public GradeUser getUser() {
         return user;
