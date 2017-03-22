@@ -1,0 +1,9 @@
+<md-content flex layout="column" ng-controller="ApproveCtrl">
+    <div layout="row" class="xd_tool_bar">
+        <md-button class="md-primary md-raised" ng-click="add()">上传绩效</md-button>
+        <md-button class="md-primary md-raised" ng-click="mod()" ng-disabled="grid.selection.getSelectedRows().length!==1 || disabledMod()">修改绩效</md-button>
+        <md-button class="md-primary md-raised" ng-click="del()" ng-disabled="grid.selection.getSelectedRows().length < 1 || disabledMod()">删除绩效</md-button>
+        <md-button class="md-primary md-raised" ng-click="approve(1)" ng-disabled="grid.selection.getSelectedRows().length < 1 || disabledSubmit()">提交审核</md-button>
+    </div>
+    <div flex ui-grid="grid" ui-grid-pagination ui-grid-selection ui-grid-auto-resize></div>
+</md-content>

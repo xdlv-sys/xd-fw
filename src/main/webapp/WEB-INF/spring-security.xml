@@ -5,7 +5,6 @@
 						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
     <s:http pattern="/user/version.cmd" security="none"/>
-    <s:http pattern="/w/index.jsp" security="none"/>
 
     <s:http auto-config="false" >
         <s:intercept-url pattern="*.cmd" access="hasRole('ROLE_EXE')"/>
