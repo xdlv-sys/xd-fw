@@ -1,7 +1,8 @@
 <md-dialog aria-label="" ng-style="{width:modal.width+'px'}">
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h2>{{modal.title}}</h2>
+            <h2 flex>{{modal.title}}</h2>
+            <md-button class="{{modal.toolbar.cls}}" ng-click="modal.toolbar.titleClick(modal.data)" ng-if="modal.toolbar" style="margin-right:10px;">{{modal.toolbar.text}}</md-button>
         </div>
     </md-toolbar>
     <md-dialog-content layout="column" style="padding: 20px;">

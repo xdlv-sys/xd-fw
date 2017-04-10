@@ -32,24 +32,19 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
     //private Logger logger = LoggerFactory.getLogger(UserRepositoryImpl.class);
     @Override
     @Transactional
-    public void saveUser(User user) throws Exception {
-        User record;
-        if (user.getId() != null) {
-            record = userRepository.findOne(user.getId());
-            if (!record.getPassword().equals(user.getPassword())){
-                user.setPassword(FwUtil.md5(user.getPassword()));
-            }
-            //merge(user);
-        } else {
-             user.setPassword(FwUtil.md5(user.getPassword()));
-            //save(user);
+    public User saveUser(User user) throws Exception {
+        if (user.getId() == null
+                || !user.getPassword().equals(
+                        userRepository.findOne(user.getId()).getPassword())) {
+            // new user or modify password
+            user.setPassword(FwUtil.md5(user.getPassword()));
         }
         user.setDept(deptRepository.findOne(user.getDept().getId()));
 
         List<Role> roles = user.getRoles() != null ? user.getRoles().stream().map(
                 role -> roleRepository.findOne(role.getId())).collect(Collectors.toList()) : new ArrayList<>();
         user.setRoles(roles);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override

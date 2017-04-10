@@ -55,6 +55,8 @@ services.factory('menu', ['$state', function($state) {
             page.each(function(v) {
                 me.sections.push(v);
             });
+            // default open selection is first menu
+            me.openedSection = page[0];
         }
     };
 

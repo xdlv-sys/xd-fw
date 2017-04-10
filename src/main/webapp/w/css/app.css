@@ -74,6 +74,9 @@ a:active {
 .max_height3 {
     max-height: 92%;
 }
+.max_height4 {
+    max-height: 96%;
+}
 
 .pull_center {
     text-align: center;
@@ -85,10 +88,10 @@ a:active {
     min-height:107px!important;
 }
 md-input-container.md-input-focused>label{
-    font-size: 20px;
+    font-size: 18px;
 }
 md-input-container.md-input-has-value>label{
-    font-size: 20px;
+    font-size: 18px;
 }
 md-input-container>label{
     padding-bottom:3px;

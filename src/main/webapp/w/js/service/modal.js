@@ -1,4 +1,4 @@
-services.service('modal', ['$mdDialog', function($mdDialog) {
+services.service('modal', function($mdDialog, $mdToast) {
     this.confirm = function(msg, conf) {
         var confirm = $mdDialog.confirm()
             .title('提示信息')
@@ -25,6 +25,23 @@ services.service('modal', ['$mdDialog', function($mdDialog) {
     this.hide = function() {
         $mdDialog.hide();
     };
+    this.prompt = function(conf) {
+        var confirm = $mdDialog.prompt()
+            .title(conf.title || '请输入')
+            .textContent(conf.content || '')
+            .placeholder(conf.placeholder || '')
+            .ariaLabel('input')
+            .ok('确定')
+            .cancel('取消');
+
+        $mdDialog.show(confirm).then(function(result) {
+            conf.ok(result);
+        }, function() {
+            if (conf.cancel) {
+                conf.cancel();
+            }
+        });
+    };
     this.alert = function(msg) {
         $mdDialog.show(
             $mdDialog.alert()
@@ -39,9 +56,9 @@ services.service('modal', ['$mdDialog', function($mdDialog) {
     this.openWithCtrl = function(controller, conf) {
         var modal = angular.extend({
             data: {},
-            cancel: function(){$mdDialog.cancel();},
-            answer: function(){$mdDialog.hide(this.data);}
-        },conf);
+            cancel: function() { $mdDialog.cancel(); },
+            answer: function() { $mdDialog.hide(this.data); }
+        }, conf);
 
         $mdDialog.show({
             controller: controller,
@@ -49,6 +66,7 @@ services.service('modal', ['$mdDialog', function($mdDialog) {
             templateUrl: 'js/tpl/dialog-common.html',
             parent: angular.element(document.body),
             clickOutsideToClose: false,
+            fullscreen: true,
             locals: {
                 dialogConf: {
                     modal: modal
@@ -88,4 +106,12 @@ services.service('modal', ['$mdDialog', function($mdDialog) {
                 }
             });
     };
-}]);
+    this.toast = function(msg, position, delay) {
+        position = position || 'bottom left right';
+        delay = delay || 2000;
+        $mdToast.show($mdToast.simple().textContent(msg).position(
+            position).hideDelay(delay));
+    };
+
+
+});

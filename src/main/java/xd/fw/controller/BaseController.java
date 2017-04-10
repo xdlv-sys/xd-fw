@@ -13,12 +13,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.servlet.ModelAndView;
 import xd.fw.bean.User;
 import xd.fw.dao.UserRepositoryCustom;
 import xd.fw.service.FwService;
+import xd.fw.service.IConst;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,7 +30,7 @@ import java.util.List;
 /**
  * Created by xd on 2016/11/30.
  */
-public abstract class BaseController {
+public abstract class BaseController implements IConst{
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -122,5 +125,10 @@ public abstract class BaseController {
             fileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
         }
         return fileName;
+    }
+
+    protected ModelAndView download(HttpServletRequest request, HttpServletResponse response, String path, String fileName) throws UnsupportedEncodingException {
+        response.setHeader("Content-Disposition","attachment; filename=\"" + writeDownloadFile(request,fileName) +"\"");
+        return new ModelAndView("/WEB-INF/" + path + "/" + fileName);
     }
 }

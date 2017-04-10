@@ -38,10 +38,14 @@ services.service('configuration', ['common', function(common) {
     };
 
     this.i18n = function(groupNo, name, value) {
-        return this.configurations[this.makeKey(groupNo, name)][value].value;
+        if (angular.isBlank(value)){
+            return '';
+        }
+        var v = this.configurations[this.makeKey(groupNo, name)][value];
+        return v ? v.value : '';
     };
-    this.group = function(groupNo, name) {
-        var ret = [];
+    this.group = function(groupNo, name, init) {
+        var ret = init || [];
         angular.forEach(this.configurations[this.makeKey(groupNo, name)], function(v) {
             if (!angular.isBlank(v)) {
                 ret.push(angular.copy(v));

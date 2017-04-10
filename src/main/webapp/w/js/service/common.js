@@ -17,7 +17,8 @@ services.config(['$httpProvider', function($httpProvider) {
     });*/
 }]);
 
-services.service('common', ['$http', 'modal', '$q', '$timeout', function($http, modal, $q, $timeout) {
+services.service('common', function($http, modal, $q, $timeout) {
+
     this.async = function(f) {
         var p = $timeout(function() {
             f();
@@ -46,11 +47,11 @@ services.service('common', ['$http', 'modal', '$q', '$timeout', function($http, 
         }
         return this.post(url, params, call);
     };
-    this.delete = function(url, params, call){
+    this.delete = function(url, params, call) {
         var me = this;
         modal.confirm('确认要删除吗？', {
-            postive: function(){
-                me.post(url,params, call);
+            postive: function() {
+                me.post(url, params, call);
             }
         });
     };
@@ -87,7 +88,13 @@ services.service('common', ['$http', 'modal', '$q', '$timeout', function($http, 
         var formData = new FormData();
         for (var key in params) {
             if (!angular.isBlank(params[key])) {
-                formData.append(key, params[key]);
+                if (angular.isArray(params[key])) {
+                    angular.forEach(params[key], function(v) {
+                        formData.append(key, v);
+                    });
+                } else {
+                    formData.append(key, params[key]);
+                }
             }
         }
 
@@ -116,32 +123,48 @@ services.service('common', ['$http', 'modal', '$q', '$timeout', function($http, 
         });
     };
 
+    this.promise = function(success) {
+        var deferred = $q.defer();
+        deferred.promise.then(function(data) {
+            success(data);
+        });
+        return deferred;
+    };
+
     this.createGridOption = function(columnDefs, scope, loadData, configuration) {
-        return {
+        return this.createGrid(columnDefs,{
+            scope: scope,
+            loadData: loadData,
+            configuration: configuration
+        });
+    };
+    this.createGrid = function(columnDefs, conf) {
+        return angular.extend({
             enableColumnMenus: false,
             paginationPageSizes: [25, 50, 75],
             paginationPageSize: 25,
             useExternalPagination: true,
             useExternalSorting: true,
             columnDefs: columnDefs,
-            configuration: configuration,
             refresh: function(start) {
                 if (start) {
                     this.paginationCurrentPage = 1;
                 }
-                loadData(this.paginationCurrentPage, this.paginationPageSize);
+                this.loadData.call(this.scope,this.paginationCurrentPage, this.paginationPageSize);
             },
             paginationTemplate: 'js/tpl/pagination.html',
             onRegisterApi: function(gridApi) {
                 if (!this.selection) {
                     this.selection = gridApi.selection;
-                    gridApi.pagination && gridApi.pagination.on.paginationChanged(scope, loadData);
+                    if (this.useExternalPagination){
+                        gridApi.pagination && gridApi.pagination.on.paginationChanged(this.scope, this.loadData);
+                    }
                 }
 
             }
-        };
+        }, conf);
     }
-}]);
+});
 if (!angular.isFunction) {
     angular.isFunction = function(object) {
         return object && getClass.call(object) == '[object Function]';
@@ -191,6 +214,7 @@ Array.prototype.containsId = function(o) {
 Array.prototype.each = function(f) {
     angular.forEach(this, f);
 };
+
 Array.prototype.pushAll = function(array) {
     var me = this;
     angular.forEach(array, function(v) {
@@ -199,9 +223,9 @@ Array.prototype.pushAll = function(array) {
 };
 
 if (!angular.each) {
-    angular.each = function(array, f) {
+    angular.each = function(array, f, last) {
         if (angular.isBlank(array) || !f) {
-            return;
+            return last;
         }
         var tmp;
         for (var i = 0; i < array.length; i++) {
@@ -210,5 +234,6 @@ if (!angular.each) {
                 return tmp;
             }
         }
+        return last;
     };
 }

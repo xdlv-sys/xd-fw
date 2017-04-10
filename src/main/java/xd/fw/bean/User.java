@@ -19,7 +19,7 @@ public class User {
     private String password;
 
     private Date birthday;
-    private byte sex;
+    private Byte sex;
     private Date entryTime;
     private String mobile;
     private String phone;
@@ -75,11 +75,11 @@ public class User {
         this.birthday = birthday;
     }
 
-    public byte getSex() {
+    public Byte getSex() {
         return sex;
     }
 
-    public void setSex(byte sex) {
+    public void setSex(Byte sex) {
         this.sex = sex;
     }
 

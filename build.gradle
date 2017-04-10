@@ -1,3 +1,5 @@
+import xd.GeneratorPlugin
+
 group 'xd.fw'
 version '1.0-SNAPSHOT'
 buildscript {
@@ -20,6 +22,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'war'
 apply plugin: 'org.springframework.boot'
+
 repositories {
     maven {
         url 'http://maven.aliyun.com/nexus/content/groups/public/'
@@ -41,6 +44,7 @@ dependencies {
     runtime ([group: 'mysql', name: 'mysql-connector-java', version: '5.1.38'])
 
     compile fileTree(dir:'src/main/webapp/WEB-INF/lib',include:['*.jar'], exclude:['*-source.jar'])
+    //providedCompile group: 'org.gradle', name: 'gradle-core', version: '3.4.1'
 
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-devtools")
@@ -61,3 +65,4 @@ dependencies {
 
     testCompile("junit:junit")
 }
+task dao (type: GeneratorPlugin)

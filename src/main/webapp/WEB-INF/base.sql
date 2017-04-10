@@ -65,6 +65,27 @@ create table t_dynamic_conf(
   conf_value varchar(128),
   conf_desc varchar(128)
 )ENGINE = INNODB;
+insert into t_dynamic_conf values(-10,'0','confirm.1','是','通用确认');
+insert into t_dynamic_conf values(-9,'0','confirm.2','否','通用确认');
+insert into t_dynamic_conf values(-8,'0','sex.1','男','性别');
+insert into t_dynamic_conf values(-7,'0','sex.2','女','性别');
+
+insert into t_dynamic_conf values(-6,'0','police.1','中共党员','政治面貌');
+insert into t_dynamic_conf values(-116,'0','police.2','共青团员','政治面貌');
+insert into t_dynamic_conf values(-5,'0','police.3','群众','政治面貌');
+
+insert into t_dynamic_conf values(-4,'0','degree.1','学士','学位');
+insert into t_dynamic_conf values(-3,'0','degree.2','硕士','学位');
+insert into t_dynamic_conf values(-2,'0','degree.3','博士','学位');
+insert into t_dynamic_conf values(-1,'0','degree.4','博士后','学位');
+
+insert into t_dynamic_conf values(-11,'0','certification.1','本科','学历');
+insert into t_dynamic_conf values(-12,'0','certification.2','研究生','学历');
+insert into t_dynamic_conf values(-13,'0','certification.3','博士生','学历');
+insert into t_dynamic_conf values(-14,'0','certification.4','大专生','学历');
+
+
+
 
 insert into t_dept values(0,-1,'公司');
 insert into t_user(id,name,password,sex,mail,dept) values(-10,'a','0cc175b9c0f1b6a831c399e269772661',0,'a@a.com',0);

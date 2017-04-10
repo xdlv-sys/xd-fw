@@ -26,7 +26,7 @@
         </md-button>
         <span flex></span>
         <div layout="row" ng-if="loginSuccess">
-            <md-button class="fa fa-user" ng-click="changePassword()"><span class="tool_button">{{user.name}}</span></md-button>
+            <md-button class="fa fa-user" ng-click="changePassword()"><span class="tool_button">{{user.fullName || user.name}}</span></md-button>
             <md-button class="fa fa-sign-out" ng-click="logout()"><span class="tool_button">退出</span></md-button>
         </div>
     </md-toolbar>

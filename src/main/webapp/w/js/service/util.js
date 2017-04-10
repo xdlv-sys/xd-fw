@@ -26,4 +26,15 @@ services.service('util', ['common', function(common) {
         return arr;
     };
 
+    this.lastMonth = function() {
+        var d = new Date();
+        var month = d.getMonth();
+        var year = d.getFullYear();
+        if (month === 0) {
+            year = year - 1;
+            month = 12;
+        }
+        return year + '-' + month + '-01';
+    };
+
 }]);

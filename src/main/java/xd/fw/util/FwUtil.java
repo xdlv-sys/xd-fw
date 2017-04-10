@@ -359,7 +359,8 @@ public class FwUtil {
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println(toFixed(1.2345, 2));
+        System.out.println("&bean&akdk".replaceAll("&bean&","111"));
+
         //unzip(new File("C:\\Work\\Java\\output\\war.zip"), new File("C:\\Work\\Java\\output\\war"));
     }
 }
